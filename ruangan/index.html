@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#143a31">
+<title>Bariko Putera | Visualisasi Keramik & Granit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400..700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#"><span class="brand-mark">BP</span><span class="brand-text"><b>Bariko Putera</b><small>Keramik &amp; Granit, Pemalang</small></span></a>
+  <span class="top-pill"><i></i>Demo interaktif</span>
+</header>
+<main class="shell">
+  <section class="intro">
+    <h1>Temukan lantai yang cocok untuk ruangmu.</h1>
+    <p class="intro-copy">Pilih motif keramik atau granit dan lihat perubahannya langsung pada foto ruangan.</p>
+  </section>
+  <section class="workspace">
+    <div class="preview-panel">
+      <div class="panel-head">
+        <div><h2>Pratinjau ruangan</h2><p>Ruang tamu modern</p></div>
+        <button class="ghost-btn" id="toggleOriginal" type="button">Lihat lantai asli</button>
+      </div>
+      <div class="room-frame" id="roomFrame" role="button" tabindex="0" aria-label="Perbesar foto ruangan">
+        <canvas id="roomCanvas" width="1400" height="788" role="img" aria-label="Foto ruang tamu dengan lantai keramik yang dapat diganti"></canvas>
+        <span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>Ketuk untuk perbesar</span>
+        <div class="view-label" aria-live="polite"><span class="live-dot"></span><span id="viewLabel">Memuat foto ruangan…</span></div>
+      </div>
+      <div class="preview-foot"><div class="now"><b id="selectedName">Marble Sand</b><span id="selectedSize">60 × 60 cm</span></div><span class="hint">*Visualisasi perkiraan; warna asli dapat berbeda</span></div>
+    </div>
+    <aside class="catalog-panel">
+      <div class="catalog-title"><h2>Pilih motif</h2><span class="count" id="count">06 produk</span></div>
+      <label class="searchbox"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search" type="search" placeholder="Cari motif atau ukuran…" aria-label="Cari motif atau ukuran"></label>
+      <div class="filters" id="filters" role="group" aria-label="Filter ukuran"></div>
+      <div class="product-grid" id="productGrid"></div>
+      <div class="product-detail">
+        <div class="detail-swatch" id="detailSwatch"></div>
+        <div class="detail-copy"><small>Motif terpilih</small><b id="detailName">Marble Sand</b><span id="detailMeta">60 × 60 cm · Glossy</span></div>
+      </div>
+      <button class="reset-btn" id="reset" type="button"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>Kembalikan ke motif awal</button>
+      <p class="privacy-note">Tidak perlu login. Pilihan motif diproses langsung di perangkat.</p>
+    </aside>
+  </section>
+  <footer><span>Bariko Putera, Pemalang</span><span>Visualisasi keramik &amp; granit, prototipe awal</span></footer>
+</main>
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Foto ruangan diperbesar">
+  <div class="lb-bar">
+    <div class="lb-title"><b id="lbName"></b><span id="lbSize"></span></div>
+    <div class="lb-actions"><button class="lb-btn" id="lbOriginal" type="button">Lihat lantai asli</button><button class="lb-btn lb-close" id="lbClose" type="button" aria-label="Tutup"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  </div>
+  <div class="lb-stage" id="lbStage"><canvas id="lbCanvas" width="1400" height="788"></canvas></div>
+  <div class="lb-ctrl"><button id="lbOut" type="button" aria-label="Perkecil">−</button><span id="lbZoom">100%</span><button id="lbIn" type="button" aria-label="Perbesar">+</button><button id="lbFit" type="button">Pas layar</button></div>
+  <p class="lb-hint" id="lbHint">Cubit atau scroll untuk zoom · seret untuk menggeser · ketuk dua kali untuk memperbesar</p>
+</div>
+<script src="assets/ruang-tamu.js"></script>
+<script src="assets/tekstur-luxor.js"></script>
+<script src="assets/tekstur-morocco.js"></script>
+<script src="assets/tekstur-miquel.js"></script>
+<script src="rooms.js"></script>
+<script src="app.js"></script>
+</body></html>

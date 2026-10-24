@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="description" content="Kalkulator Keramik & Granit - Hitung kebutuhan material dengan akurat. BARIKO PUTERA Toko Keramik & Granit Berkualitas di Pemalang." />
+    <title>Kalkulator Keramik & Granit · BARIKO PUTERA</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; script-src 'unsafe-inline'; img-src data:;" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* ===== BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+        body {
+            background: #f7f7f7;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #111111;
+            line-height: 1.4;
+            padding: 0 0 1.5rem;
+            -webkit-font-smoothing: antialiased;
+            font-size: 13px
+        }
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 0 .7rem
+        }
+        .header {
+            background: rgba(17, 17, 17, .95);
+            backdrop-filter: blur(6px);
+            padding: .5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+            margin-bottom: .3rem
+        }
+        .header .container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: .2px
+        }
+        .logo img {
+            height: 26px;
+            width: auto;
+            display: block
+        }
+        .logo span {
+            letter-spacing: -.3px
+        }
+        .hero-mini {
+            background: #111111;
+            color: #fff;
+            padding: 1.2rem 1rem 1.2rem;
+            border-radius: 16px;
+            margin: 0 .7rem 1rem;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, .12);
+            text-align: center
+        }
+        .hero-mini h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: -.3px;
+            margin-bottom: .1rem
+        }
+        .hero-mini p {
+            font-size: .75rem;
+            opacity: .85;
+            font-weight: 400
+        }
+        .card-calc {
+            background: #fff;
+            border-radius: 14px;
+            padding: 1.2rem 1rem;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, .02), 0 1px 4px rgba(0, 0, 0, .04);
+            margin: 0 .7rem 1rem;
+            border: 1px solid rgba(0, 0, 0, .02)
+        }
+        .form-group {
+            margin-bottom: .9rem
+        }
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            font-size: .75rem;
+            color: #333333;
+            margin-bottom: .25rem;
+            letter-spacing: -.2px
+        }
+        .form-group label i {
+            margin-right: .25rem;
+            opacity: .5;
+            font-size: .7rem
+        }
+        .form-control {
+            width: 100%;
+            padding: .6rem .7rem;
+            border: 1.5px solid #dedede;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            background: #fafafa;
+            transition: .2s;
+            color: #111111;
+            appearance: none
+        }
+        .form-control:focus {
+            border-color: #111111;
+            outline: 0;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, .06)
+        }
+        .form-control::placeholder {
+            color: #a3a3a3;
+            font-weight: 400;
+            font-size: .85rem
+        }
+        .custom-dropdown {
+            position: relative
+        }
+        .dropdown-selected {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: .6rem .7rem;
+            border: 1.5px solid #dedede;
+            border-radius: 12px;
+            background: #fafafa;
+            cursor: pointer;
+            font-size: .85rem;
+            color: #111111;
+            transition: .2s;
+            font-weight: 450;
+            min-height: 42px
+        }
+        .dropdown-selected.placeholder {
+            color: #8c8c8c
+        }
+        .dropdown-selected.filled {
+            color: #111111
+        }
+        .dropdown-arrow {
+            font-size: .7rem;
+            opacity: .5;
+            transition: .25s
+        }
+        .dropdown-open .dropdown-arrow {
+            transform: rotate(180deg);
+            opacity: .8
+        }
+        .dropdown-options {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-radius: 14px;
+            border: 1px solid #ececec;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, .08);
+            max-height: 180px;
+            overflow-y: auto;
+            display: none;
+            z-index: 30;
+            padding: .2rem 0
+        }
+        .dropdown-open .dropdown-options {
+            display: block
+        }
+        .dropdown-option {
+            padding: .5rem .8rem;
+            font-size: .8rem;
+            border-bottom: 1px solid #e8e8e8;
+            cursor: pointer;
+            transition: .1s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+        .dropdown-option:last-child {
+            border-bottom: 0
+        }
+        .dropdown-option:hover {
+            background: #efefef
+        }
+        .dropdown-option.selected {
+            background: #ececec;
+            color: #111111;
+            font-weight: 500
+        }
+        .dropdown-option span {
+            color: #666666;
+            font-weight: 400;
+            font-size: .7rem
+        }
+        .btn-primary {
+            width: 100%;
+            padding: .75rem;
+            background: #111111;
+            color: #fff;
+            border: 0;
+            border-radius: 40px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: .85rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: .4rem;
+            cursor: pointer;
+            transition: .2s;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, .14);
+            margin-top: .3rem;
+            min-height: 44px
+        }
+        .btn-primary:active {
+            transform: scale(.97)
+        }
+        .btn-primary:disabled {
+            opacity: .6;
+            transform: none;
+            box-shadow: none
+        }
+        .alert-error {
+            background: #fee9e7;
+            border-left: 4px solid #c73b2b;
+            color: #8f2b1f;
+            display: none;
+            padding: .6rem .8rem;
+            border-radius: 12px;
+            font-size: .75rem;
+            margin: .6rem 0 0;
+            align-items: center;
+            gap: .4rem
+        }
+        .alert-error.show {
+            display: flex
+        }
+        .result-dashboard {
+            margin-top: 1.2rem;
+            background: #f7f7f7;
+            border-radius: 14px;
+            padding: 1rem .8rem;
+            border: 1px solid #ececec;
+            display: none
+        }
+        .result-dashboard.show {
+            display: block;
+            animation: fadeUp .35s ease
+        }
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(10px)
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: .8rem;
+            border-bottom: 1px solid #e5e5e5;
+            padding-bottom: .4rem
+        }
+        .result-header h3 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: .95rem;
+            color: #111111;
+            letter-spacing: -.3px
+        }
+        .badge-size {
+            background: #111111;
+            padding: .15rem .6rem;
+            border-radius: 40px;
+            font-size: .65rem;
+            font-weight: 600;
+            color: #ffffff
+        }
+        .metric-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: .5rem;
+            margin-bottom: .5rem
+        }
+        .metric-item {
+            background: #fff;
+            border-radius: 12px;
+            padding: .5rem .2rem;
+            text-align: center;
+            border: 1px solid #e8e8e8
+        }
+        .metric-label {
+            font-size: .55rem;
+            text-transform: uppercase;
+            letter-spacing: .3px;
+            color: #666666;
+            font-weight: 600
+        }
+        .metric-value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #111111;
+            margin-top: .05rem;
+            line-height: 1.2
+        }
+        .metric-value small {
+            font-weight: 400;
+            font-size: .6rem;
+            color: #737373;
+            margin-left: 1px
+        }
+        .metric-buffer {
+            background: #111111;
+            border: 1px solid #111111
+        }
+        .metric-buffer .metric-label {
+            color: rgba(255, 255, 255, .65)
+        }
+        .metric-buffer .metric-value {
+            color: #ffffff
+        }
+        .metric-buffer .metric-value small {
+            color: rgba(255, 255, 255, .6)
+        }
+        .pieces-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: .7rem;
+            color: #4d4d4d;
+            background: #f0f0f0;
+            padding: .3rem .7rem;
+            border-radius: 40px;
+            margin-top: .2rem
+        }
+        .pieces-row strong {
+            color: #111111
+        }
+        .action-group {
+            display: flex;
+            flex-direction: column;
+            gap: .4rem;
+            margin-top: .8rem
+        }
+        .btn-wa {
+            background: #25b66b;
+            color: #fff;
+            border: 0;
+            border-radius: 40px;
+            padding: .6rem;
+            font-weight: 600;
+            font-size: .8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .4rem;
+            text-decoration: none;
+            transition: .2s;
+            box-shadow: 0 2px 8px rgba(37, 182, 107, .15);
+            min-height: 40px
+        }
+        .btn-wa:active {
+            transform: scale(.97)
+        }
+        .btn-print {
+            background: 0 0;
+            color: #333333;
+            border: 1px solid #cccccc;
+            border-radius: 40px;
+            padding: .5rem;
+            font-weight: 500;
+            font-size: .75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .3rem;
+            cursor: pointer;
+            transition: .2s;
+            min-height: 38px
+        }
+        .btn-print:active {
+            background: #ececec
+        }
+        .alert-tip {
+            background: #f0f0f0;
+            border-radius: 12px;
+            padding: .5rem .7rem;
+            font-size: .65rem;
+            color: #262626;
+            margin: .6rem 0 .2rem;
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+            border-left: 3px solid #111111
+        }
+        .alert-tip i {
+            color: #111111;
+            opacity: .7;
+            font-size: .7rem
+        }
+        .footer-mini {
+            text-align: center;
+            font-size: .6rem;
+            color: #8c8c8c;
+            padding: 1.5rem .7rem .5rem;
+            border-top: 1px solid #ececec;
+            margin: 1rem .7rem 0
+        }
+        .footer-mini a {
+            color: #111111;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            font-weight: 500
+        }
+        .mode-switcher {
+            display: flex;
+            background: #ececec;
+            border-radius: 12px;
+            padding: .25rem;
+            gap: .25rem;
+            margin-bottom: 1rem
+        }
+        .mode-tab {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .35rem;
+            padding: .55rem .4rem;
+            border: 0;
+            background: 0 0;
+            border-radius: 9px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: .78rem;
+            color: #666666;
+            cursor: pointer;
+            transition: .2s
+        }
+        .mode-tab.active {
+            background: #fff;
+            color: #111111;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .10)
+        }
+        .mode-tab i {
+            font-size: .75rem
+        }
+        .mode-panel {
+            display: none
+        }
+        .mode-panel.active {
+            display: block
+        }
+        .wall-dimension-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: .5rem
+        }
+        .wall-dimension-grid .full-width {
+            grid-column: 1/-1
+        }
+        .wall-dimension-grid .form-group {
+            margin-bottom: 0
+        }
+        .wall-info {
+            font-size: .65rem;
+            color: #666666;
+            margin: .2rem 0 .8rem;
+            padding-left: .2rem
+        }
+        /* ===== ROOM ROW ===== */
+        .room-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .3rem;
+            align-items: center;
+            padding: .4rem .2rem;
+            border-bottom: 1px solid #e8e8e8;
+            background: #fafafa;
+            border-radius: 8px;
+            margin-bottom: .3rem
+        }
+        .room-row input,
+        .room-row select {
+            font-family: 'Inter', sans-serif;
+            font-size: .7rem;
+            background: #fff;
+            border: 1.5px solid #dedede;
+            border-radius: 8px;
+            padding: .3rem .4rem;
+            min-height: 32px;
+            transition: .15s;
+            color: #111111
+        }
+        .room-row input:focus,
+        .room-row select:focus {
+            border-color: #111111;
+            outline: 0;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, .08)
+        }
+        .room-row .room-name {
+            flex: 1 1 80px;
+            min-width: 60px
+        }
+        .room-row .room-length,
+        .room-row .room-width {
+            flex: 0 1 60px;
+            min-width: 50px
+        }
+        .room-row .room-area {
+            flex: 0 1 50px;
+            font-weight: 600;
+            font-size: .7rem;
+            text-align: center;
+            color: #111111;
+            min-width: 40px
+        }
+        .room-row .room-tile-select {
+            flex: 1 1 90px;
+            min-width: 80px
+        }
+        .room-row .room-dus {
+            flex: 0 1 40px;
+            font-weight: 700;
+            font-size: .75rem;
+            text-align: center;
+            color: #111111;
+            min-width: 30px
+        }
+        .room-row .room-delete {
+            flex: 0 0 24px;
+            background: 0 0;
+            border: 0;
+            color: #adadad;
+            cursor: pointer;
+            font-size: .7rem;
+            padding: 0;
+            transition: .15s;
+            min-height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+        .room-row .room-delete:hover {
+            color: #c73b2b
+        }
+        .btn-add-room {
+            width: 100%;
+            padding: .5rem;
+            border: 1.5px dashed #b3b3b3;
+            border-radius: 12px;
+            background: 0 0;
+            color: #111111;
+            font-weight: 600;
+            font-size: .8rem;
+            cursor: pointer;
+            transition: .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .4rem;
+            margin-top: .2rem;
+            font-family: 'Inter', sans-serif
+        }
+        .btn-add-room:hover {
+            background: #efefef;
+            border-color: #111111
+        }
+        /* ===== MULTI SUMMARY (TABLE STYLE) ===== */
+        .summary-multi {
+            display: none;
+            margin-top: 1rem;
+            background: #f7f7f7;
+            border-radius: 14px;
+            padding: 1rem;
+            border: 1px solid #ececec
+        }
+        .summary-multi.show {
+            display: block;
+            animation: fadeUp .35s ease
+        }
+        .summary-multi .table-wrap {
+            overflow-x: auto;
+            margin: .5rem 0 .3rem;
+            border-radius: 10px;
+            border: 1px solid #dcdcdc
+        }
+        .summary-multi table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .7rem;
+            min-width: 480px;
+            font-family: 'Inter', sans-serif
+        }
+        .summary-multi table th {
+            background: #111111;
+            color: #fff;
+            font-weight: 600;
+            padding: .5rem .4rem;
+            text-align: left;
+            white-space: nowrap;
+            font-size: .65rem;
+            letter-spacing: .2px;
+            border: 1px solid #111111
+        }
+        .summary-multi table td {
+            padding: .4rem .4rem;
+            border: 1px solid #dcdcdc;
+            vertical-align: middle;
+            background: #fff
+        }
+        .summary-multi table tr:nth-child(even) td {
+            background: #f7f7f7
+        }
+        .summary-multi table .num {
+            text-align: right;
+            font-feature-settings: "tnum"
+        }
+        .summary-multi table .total-row td {
+            background: #ececec !important;
+            font-weight: 700;
+            border-top: 2px solid #111111;
+            font-size: .7rem
+        }
+        .summary-multi table .total-row td:first-child {
+            text-align: center
+        }
+        .summary-multi .table-caption {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: .7rem;
+            color: #4d4d4d;
+            padding: .2rem 0 .4rem;
+            flex-wrap: wrap;
+            gap: .3rem
+        }
+        .summary-multi .table-caption .badge-total {
+            background: #111111;
+            color: #fff;
+            padding: .15rem .7rem;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: .65rem
+        }
+        .summary-multi .empty-state {
+            color: #666666;
+            font-size: .8rem;
+            text-align: center;
+            padding: .5rem
+        }
+        .summary-multi .action-group-multi {
+            display: flex;
+            flex-direction: column;
+            gap: .4rem;
+            margin-top: .6rem
+        }
+        @media(max-width:420px) {
+            body {
+                font-size: 12px
+            }
+            .hero-mini {
+                padding: 1rem .8rem
+            }
+            .hero-mini h1 {
+                font-size: 1.05rem
+            }
+            .card-calc {
+                padding: 1rem .8rem
+            }
+            .metric-grid {
+                gap: .35rem
+            }
+            .metric-item {
+                padding: .4rem .15rem
+            }
+            .metric-value {
+                font-size: .85rem
+            }
+            .form-control {
+                font-size: 14px;
+                padding: .5rem .6rem
+            }
+            .dropdown-selected {
+                padding: .5rem .6rem;
+                font-size: .8rem;
+                min-height: 38px
+            }
+            .mode-tab {
+                font-size: .72rem;
+                padding: .5rem .3rem
+            }
+            .wall-dimension-grid {
+                gap: .3rem
+            }
+            .room-row input,
+            .room-row select {
+                font-size: .65rem;
+                padding: .25rem .3rem;
+                min-height: 28px
+            }
+            .room-row .room-name {
+                flex: 1 1 70px;
+                min-width: 50px
+            }
+            .room-row .room-length,
+            .room-row .room-width {
+                flex: 0 1 50px;
+                min-width: 40px
+            }
+            .room-row .room-area {
+                flex: 0 1 40px;
+                font-size: .65rem;
+                min-width: 30px
+            }
+            .room-row .room-tile-select {
+                flex: 1 1 70px;
+                min-width: 60px
+            }
+            .room-row .room-dus {
+                flex: 0 1 32px;
+                font-size: .65rem;
+                min-width: 24px
+            }
+            .room-row .room-delete {
+                flex: 0 0 20px;
+                font-size: .6rem
+            }
+            .summary-multi table {
+                font-size: .6rem;
+                min-width: 360px
+            }
+            .summary-multi table th,
+            .summary-multi table td {
+                padding: .3rem .25rem
+            }
+        }
+        @media(max-width:360px) {
+            .metric-grid {
+                grid-template-columns: 1fr 1fr
+            }
+            .metric-item:last-child {
+                grid-column: span 2
+            }
+            .hero-mini h1 {
+                font-size: .95rem
+            }
+            .hero-mini p {
+                font-size: .65rem
+            }
+            .btn-primary {
+                font-size: .75rem;
+                padding: .6rem;
+                min-height: 38px
+            }
+            .btn-wa {
+                font-size: .7rem;
+                padding: .5rem;
+                min-height: 36px
+            }
+            .btn-print {
+                font-size: .65rem;
+                padding: .4rem;
+                min-height: 34px
+            }
+            .wall-dimension-grid {
+                gap: .2rem
+            }
+            .summary-multi table {
+                min-width: 300px;
+                font-size: .55rem
+            }
+        }
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0
+        }
+        input[type=number] {
+            -moz-appearance: textfield
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <a href="#" class="logo"><img src="data:image/png;base64,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" alt="BARIKO PUTERA" loading="lazy" /><span>BARIKO PUTERA</span></a>
+        </div>
+    </header>
+
+    <div class="hero-mini">
+        <h1>Kalkulator Keramik &amp; Granit</h1>
+        <p>Hitung kebutuhan material dengan cepat</p>
+    </div>
+
+    <div class="card-calc">
+        <!-- MODE TABS -->
+        <div class="mode-switcher">
+            <button type="button" class="mode-tab active" data-mode="floor"><i class="fas fa-vector-square"></i> Lantai</button>
+            <button type="button" class="mode-tab" data-mode="wall"><i class="fas fa-align-justify"></i> Dinding</button>
+            <button type="button" class="mode-tab" data-mode="multi"><i class="fas fa-house"></i> Rumah</button>
+        </div>
+
+        <!-- ===== LANTAI ===== -->
+        <div id="floorMode" class="mode-panel active">
+            <form id="calcForm">
+                <div class="form-group"><label for="roomLength"><i class="fas fa-arrows-left-right"></i> Panjang (m)</label><input type="number" id="roomLength" class="form-control" step="0.01" min="0.1" placeholder="contoh: 4.5" required /></div>
+                <div class="form-group"><label for="roomWidth"><i class="fas fa-arrows-up-down"></i> Lebar (m)</label><input type="number" id="roomWidth" class="form-control" step="0.01" min="0.1" placeholder="contoh: 3.2" required /></div>
+                <div class="form-group">
+                    <label><i class="fas fa-border-all"></i> Ukuran keramik</label>
+                    <div class="custom-dropdown" id="tileDropdown">
+                        <div class="dropdown-selected placeholder" id="dropdownSelected"><span>Pilih ukuran</span><i class="fas fa-chevron-down dropdown-arrow"></i></div>
+                        <div class="dropdown-options" id="dropdownOptions">
+                            <div class="dropdown-option" data-size="25x25" data-area="1.00" data-pieces="16">25×25 cm <span>1.00 m²/dus</span></div>
+                            <div class="dropdown-option" data-size="25x40" data-area="1.00" data-pieces="10">25×40 cm <span>1.00 m²/dus</span></div>
+                            <div class="dropdown-option" data-size="30x30" data-area="0.99" data-pieces="11">30×30 cm <span>0.99 m²/dus</span></div>
+                            <div class="dropdown-option" data-size="30x60" data-area="0.90" data-pieces="5">30×60 cm <span>0.90 m²/dus</span></div>
+                            <div class="dropdown-option" data-size="40x40" data-area="1.00" data-pieces="6">40×40 cm <span>1.00 m²/dus</span></div>
+                            <div class="dropdown-option" data-size="50x50" data-area="1.00" data-pieces="4">50×50 cm <span>1.00 m²/dus</span></div>
+                            <div class="dropdown-option" data-size="60x60" data-area="1.44" data-pieces="4">60×60 cm <span>1.44 m²/dus</span></div>
+                            <div class="dropdown-option" data-size="60x120" data-area="1.44" data-pieces="2">60×120 cm <span>1.44 m²/dus</span></div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="selectedTileSize" required />
+                    <input type="hidden" id="selectedTileArea" />
+                    <input type="hidden" id="selectedTilePieces" />
+                </div>
+                <button type="submit" class="btn-primary" id="calculateBtn"><i class="fas fa-calculator"></i> Hitung</button>
+                <div class="alert-error" id="errorAlert"><i class="fas fa-exclamation-circle"></i> Lengkapi semua input dengan benar.</div>
+            </form>
+            <div class="result-dashboard" id="resultDashboard">
+                <div class="result-header"><h3>Ringkasan</h3><span class="badge-size" id="selectedSizeLabel">—</span></div>
+                <div class="metric-grid">
+                    <div class="metric-item"><div class="metric-label">Luas</div><div class="metric-value" id="totalArea">0 <small>m²</small></div></div>
+                    <div class="metric-item"><div class="metric-label">Dus</div><div class="metric-value" id="totalBoxes">0 <small>dus</small></div></div>
+                    <div class="metric-item metric-buffer"><div class="metric-label">+10%</div><div class="metric-value" id="totalWithBuffer">0 <small>dus</small></div></div>
+                </div>
+                <div class="pieces-row"><span><i class="far fa-square"></i> Keping: <strong id="totalPieces">0</strong></span><span><i class="fas fa-plus-circle" style="opacity:0.4;"></i> +10%: <strong id="totalPiecesWithBuffer">0</strong></span></div>
+                <div class="action-group"><a id="whatsappLink" class="btn-wa" target="_blank" href="#"><i class="fab fa-whatsapp"></i> Konsultasi WA</a><button id="printBtn" class="btn-print" onclick="printResult('floor')"><i class="fas fa-print"></i> Cetak</button></div>
+                <div class="alert-tip"><i class="fas fa-info-circle"></i> Hasil estimasi. Konsultasi dengan tim ahli disarankan.</div>
+            </div>
+        </div>
+
+        <!-- ===== DINDING ===== -->
+        <div id="wallMode" class="mode-panel">
+            <form id="wallCalcForm">
+                <div class="wall-dimension-grid">
+                    <div class="form-group full-width"><label for="wallHeight"><i class="fas fa-arrows-up-down"></i> Tinggi (m)</label><input type="number" id="wallHeight" class="form-control" step="0.01" min="0.1" placeholder="misal 3" required /></div>
+                    <div class="form-group"><label for="wallLength"><i class="fas fa-arrows-left-right"></i> Panjang (m)</label><input type="number" id="wallLength" class="form-control" step="0.01" min="0.1" placeholder="misal 4" required /></div>
+                    <div class="form-group"><label for="wallWidth"><i class="fas fa-arrows-up-down"></i> Lebar (m)</label><input type="number" id="wallWidth" class="form-control" step="0.01" min="0.1" placeholder="misal 3" required /></div>
+                </div>
+                <div class="wall-info"><i class="fas fa-info-circle"></i> Luas dinding = 2 × (panjang + lebar) × tinggi</div>
+                <div class="form-group">
+                    <label><i class="fas fa-border-all"></i> Ukuran keramik</label>
+                    <div class="custom-dropdown" id="tileDropdownWall">
+                        <div class="dropdown-selected placeholder" id="dropdownSelectedWall"><span>Pilih ukuran</span><i class="fas fa-chevron-down dropdown-arrow"></i></div>
+                        <div class="dropdown-options">
+                            <div class="dropdown-option" data-size="25x25" data-area="1.00" data-pieces="16">25×25 cm <span>1.00 m²/dus</span></div>
+                            <div class="dropdown-option" data-size="25x40" data-area="1.00" data-pieces="10">25×40 cm <span>1.00 m²/dus</span></div>
+                            <div class="dropdown-option" data-size="30x30" data-area="0.99" data-pieces="11">30×30 cm <span>0.99 m²/dus</span></div>
+                            <div class="dropdown-option" data-size="30x60" data-area="0.90" data-pieces="5">30×60 cm <span>0.90 m²/dus</span></div>
+                            <div class="dropdown-option" data-size="40x40" data-area="1.00" data-pieces="6">40×40 cm <span>1.00 m²/dus</span></div>
+                            <div class="dropdown-option" data-size="50x50" data-area="1.00" data-pieces="4">50×50 cm <span>1.00 m²/dus</span></div>
+                            <div class="dropdown-option" data-size="60x60" data-area="1.44" data-pieces="4">60×60 cm <span>1.44 m²/dus</span></div>
+                            <div class="dropdown-option" data-size="60x120" data-area="1.44" data-pieces="2">60×120 cm <span>1.44 m²/dus</span></div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="selectedTileSizeWall" required />
+                    <input type="hidden" id="selectedTileAreaWall" />
+                    <input type="hidden" id="selectedTilePiecesWall" />
+                </div>
+                <button type="submit" class="btn-primary" id="calculateBtnWall"><i class="fas fa-calculator"></i> Hitung</button>
+                <div class="alert-error" id="errorAlertWall"><i class="fas fa-exclamation-circle"></i> Lengkapi semua input dengan benar.</div>
+            </form>
+            <div class="result-dashboard" id="resultDashboardWall">
+                <div class="result-header"><h3>Ringkasan</h3><span class="badge-size" id="selectedSizeLabelWall">—</span></div>
+                <div class="metric-grid">
+                    <div class="metric-item"><div class="metric-label">Luas</div><div class="metric-value" id="totalAreaWall">0 <small>m²</small></div></div>
+                    <div class="metric-item"><div class="metric-label">Dus</div><div class="metric-value" id="totalBoxesWall">0 <small>dus</small></div></div>
+                    <div class="metric-item metric-buffer"><div class="metric-label">+10%</div><div class="metric-value" id="totalWithBufferWall">0 <small>dus</small></div></div>
+                </div>
+                <div class="pieces-row"><span><i class="far fa-square"></i> Keping: <strong id="totalPiecesWall">0</strong></span><span><i class="fas fa-plus-circle" style="opacity:0.4;"></i> +10%: <strong id="totalPiecesWithBufferWall">0</strong></span></div>
+                <div class="action-group"><a id="whatsappLinkWall" class="btn-wa" target="_blank" href="#"><i class="fab fa-whatsapp"></i> Konsultasi WA</a><button type="button" class="btn-print" onclick="printResult('wall')"><i class="fas fa-print"></i> Cetak</button></div>
+                <div class="alert-tip"><i class="fas fa-info-circle"></i> Hasil estimasi. Konsultasi dengan tim ahli disarankan.</div>
+            </div>
+        </div>
+
+        <!-- ===== RUMAH (MULTI ROOM) ===== -->
+        <div id="multiMode" class="mode-panel">
+            <div style="font-size:.75rem;color:#4d4d4d;margin-bottom:.6rem;">
+                <i class="fas fa-info-circle"></i> Tambahkan ruangan satu per satu. Isi panjang &amp; lebar, pilih ukuran keramik.
+            </div>
+            <div id="roomContainer"></div>
+            <button id="addRoomBtn" class="btn-add-room"><i class="fas fa-plus-circle"></i> Tambah Ruangan</button>
+            <button id="finishBtn" class="btn-primary" style="margin-top:.5rem;"><i class="fas fa-check-circle"></i> Selesai</button>
+            <div id="summaryMulti" class="summary-multi"></div>
+        </div>
+    </div>
+
+    <div class="footer-mini">
+        <p>BARIKO PUTERA · Toko Keramik &amp; Granit · Pemalang</p>
+        <p style="margin-top:.2rem;opacity:.6;">&copy; 2025 · <a href="#">Kalkulator interaktif</a></p>
+    </div>
+
+    <script>
+        // ============================================================
+        // OBFUSCATED STRINGS
+        // ============================================================
+        var _0x1a2b = [
+            'wa.me/6281337710483',
+            'Halo BARIKO PUTERA, saya mau konsultasi kebutuhan keramik/granit:%0A- Luas: ',
+            ' m²%0A- Ukuran: ',
+            ' cm%0A- Estimasi dus (+10%): ',
+            ' dus%0A- Total keping: ',
+            ' pcs%0A%0ATerima kasih.',
+            'Halo BARIKO PUTERA, saya mau konsultasi kebutuhan keramik/granit dinding:%0A- Tinggi: ',
+            ' m, Panjang: ',
+            ' m, Lebar: ',
+            ' m%0A- Luas dinding: ',
+            ' m²%0A- Ukuran: ',
+            ' cm%0A- Estimasi dus (+10%): ',
+            ' dus%0A- Total keping: ',
+            ' pcs%0A%0ATerima kasih.',
+            'Halo BARIKO PUTERA, saya mau konsultasi kebutuhan keramik/granit untuk seluruh rumah (tanpa buffer):%0A%0A',
+            '%0ATotal luas: ',
+            ' m²%0ATotal dus (pembulatan ke atas): ',
+            ' dus%0A%0ATerima kasih.'
+        ];
+
+        function _0x2b3c(a) { return _0x1a2b[a] || ''; }
+
+        // ============================================================
+        // MODE SWITCHER
+        // ============================================================
+        var tabs = document.querySelectorAll('.mode-tab'),
+            floorMode = document.getElementById('floorMode'),
+            wallMode = document.getElementById('wallMode'),
+            multiMode = document.getElementById('multiMode');
+        tabs.forEach(function(t) {
+            t.addEventListener('click', function() {
+                tabs.forEach(function(t2) { t2.classList.remove('active'); });
+                this.classList.add('active');
+                var m = this.dataset.mode;
+                floorMode.classList.toggle('active', m === 'floor');
+                wallMode.classList.toggle('active', m === 'wall');
+                multiMode.classList.toggle('active', m === 'multi');
+            });
+        });
+
+        // ============================================================
+        // DROPDOWN GENERIC (untuk Lantai & Dinding)
+        // ============================================================
+        function setupDropdown(c, s, si, ai, pi, cb) {
+            var container = document.getElementById(c),
+                selected = document.getElementById(s),
+                sizeInput = document.getElementById(si),
+                areaInput = document.getElementById(ai),
+                piecesInput = document.getElementById(pi),
+                opts = container.querySelectorAll('.dropdown-option');
+            opts.forEach(function(o) {
+                o.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    var sz = this.dataset.size;
+                    sizeInput.value = sz;
+                    areaInput.value = parseFloat(this.dataset.area);
+                    piecesInput.value = parseInt(this.dataset.pieces, 10);
+                    selected.querySelector('span').textContent = sz + ' cm';
+                    selected.classList.remove('placeholder');
+                    selected.classList.add('filled');
+                    selected.style.borderColor = '';
+                    opts.forEach(function(o2) { o2.classList.remove('selected'); });
+                    this.classList.add('selected');
+                    container.classList.remove('dropdown-open');
+                    if (cb) cb();
+                });
+            });
+            selected.addEventListener('click', function(e) {
+                e.stopPropagation();
+                container.classList.toggle('dropdown-open');
+            });
+            selected.querySelector('span').textContent = 'Pilih ukuran';
+            selected.classList.add('placeholder');
+            selected.classList.remove('filled');
+            sizeInput.value = '';
+            areaInput.value = '';
+            piecesInput.value = '';
+        }
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.custom-dropdown').forEach(function(d) { d.classList.remove('dropdown-open'); });
+        });
+
+        // ============================================================
+        // LANTAI
+        // ============================================================
+        var rL = document.getElementById('roomLength'),
+            rW = document.getElementById('roomWidth'),
+            sTS = document.getElementById('selectedTileSize'),
+            sTA = document.getElementById('selectedTileArea'),
+            sTP = document.getElementById('selectedTilePieces'),
+            dS = document.getElementById('dropdownSelected'),
+            cF = document.getElementById('calcForm'),
+            eA = document.getElementById('errorAlert'),
+            rD = document.getElementById('resultDashboard');
+        var tA = document.getElementById('totalArea'),
+            sSL = document.getElementById('selectedSizeLabel'),
+            tB = document.getElementById('totalBoxes'),
+            tWB = document.getElementById('totalWithBuffer'),
+            tP = document.getElementById('totalPieces'),
+            tPWB = document.getElementById('totalPiecesWithBuffer'),
+            wAL = document.getElementById('whatsappLink');
+
+        setupDropdown('tileDropdown', 'dropdownSelected', 'selectedTileSize', 'selectedTileArea', 'selectedTilePieces',
+            function() { rD.classList.remove('show');
+                eA.classList.remove('show'); });
+
+        cF.addEventListener('submit', function(e) {
+            e.preventDefault();
+            eA.classList.remove('show');
+            var valid = true;
+            var length = parseFloat(rL.value),
+                width = parseFloat(rW.value);
+            if (!length || length <= 0) { valid = false;
+                rL.style.borderColor = '#c73b2b'; } else { rL.style.borderColor = ''; }
+            if (!width || width <= 0) { valid = false;
+                rW.style.borderColor = '#c73b2b'; } else { rW.style.borderColor = ''; }
+            var size = sTS.value;
+            if (!size) { valid = false;
+                dS.style.borderColor = '#c73b2b'; } else { dS.style.borderColor = ''; }
+            if (!valid) { eA.classList.add('show');
+                eA.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+            var area = parseFloat(sTA.value),
+                piecesPerBox = parseInt(sTP.value, 10),
+                roomArea = length * width,
+                boxesNeeded = roomArea / area,
+                boxesWithBuffer = boxesNeeded * 1.1,
+                piecesNeeded = boxesNeeded * piecesPerBox,
+                piecesWithBuffer = boxesWithBuffer * piecesPerBox;
+            tA.innerHTML = roomArea.toFixed(2) + ' <small>m²</small>';
+            sSL.textContent = size + ' cm';
+            tB.innerHTML = Math.ceil(boxesNeeded) + ' <small>dus</small>';
+            tWB.innerHTML = Math.ceil(boxesWithBuffer) + ' <small>dus</small>';
+            tP.textContent = Math.ceil(piecesNeeded);
+            tPWB.textContent = Math.ceil(piecesWithBuffer);
+            var msg = 'Halo BARIKO PUTERA, saya mau konsultasi kebutuhan keramik/granit:%0A- Luas: ' + roomArea.toFixed(2) +
+                ' m²%0A- Ukuran: ' + size + ' cm%0A- Estimasi dus (+10%): ' + Math.ceil(boxesWithBuffer) +
+                ' dus%0A- Total keping: ' + Math.ceil(piecesWithBuffer) + ' pcs%0A%0ATerima kasih.';
+            wAL.href = 'https://' + _0x2b3c(0) + '?text=' + encodeURIComponent(msg);
+            rD.classList.add('show');
+            rD.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        rL.addEventListener('input', function() { this.style.borderColor = '';
+            eA.classList.remove('show');
+            rD.classList.remove('show'); });
+        rW.addEventListener('input', function() { this.style.borderColor = '';
+            eA.classList.remove('show');
+            rD.classList.remove('show'); });
+
+        // ============================================================
+        // DINDING
+        // ============================================================
+        var wH = document.getElementById('wallHeight'),
+            wL = document.getElementById('wallLength'),
+            wW = document.getElementById('wallWidth'),
+            sTSW = document.getElementById('selectedTileSizeWall'),
+            sTAW = document.getElementById('selectedTileAreaWall'),
+            sTPW = document.getElementById('selectedTilePiecesWall'),
+            dSW = document.getElementById('dropdownSelectedWall'),
+            wCF = document.getElementById('wallCalcForm'),
+            eAW = document.getElementById('errorAlertWall'),
+            rDW = document.getElementById('resultDashboardWall');
+        var tAW = document.getElementById('totalAreaWall'),
+            sSLW = document.getElementById('selectedSizeLabelWall'),
+            tBW = document.getElementById('totalBoxesWall'),
+            tWBW = document.getElementById('totalWithBufferWall'),
+            tPW = document.getElementById('totalPiecesWall'),
+            tPWBW = document.getElementById('totalPiecesWithBufferWall'),
+            wALW = document.getElementById('whatsappLinkWall');
+
+        setupDropdown('tileDropdownWall', 'dropdownSelectedWall', 'selectedTileSizeWall', 'selectedTileAreaWall',
+            'selectedTilePiecesWall', function() { rDW.classList.remove('show');
+                eAW.classList.remove('show'); });
+
+        wCF.addEventListener('submit', function(e) {
+            e.preventDefault();
+            eAW.classList.remove('show');
+            var valid = true;
+            var height = parseFloat(wH.value),
+                length = parseFloat(wL.value),
+                width = parseFloat(wW.value);
+            if (!height || height <= 0) { valid = false;
+                wH.style.borderColor = '#c73b2b'; } else { wH.style.borderColor = ''; }
+            if (!length || length <= 0) { valid = false;
+                wL.style.borderColor = '#c73b2b'; } else { wL.style.borderColor = ''; }
+            if (!width || width <= 0) { valid = false;
+                wW.style.borderColor = '#c73b2b'; } else { wW.style.borderColor = ''; }
+            var size = sTSW.value;
+            if (!size) { valid = false;
+                dSW.style.borderColor = '#c73b2b'; } else { dSW.style.borderColor = ''; }
+            if (!valid) { eAW.classList.add('show');
+                eAW.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+            var wallArea = 2 * (length + width) * height,
+                area = parseFloat(sTAW.value),
+                piecesPerBox = parseInt(sTPW.value, 10),
+                boxesNeeded = wallArea / area,
+                boxesWithBuffer = boxesNeeded * 1.1,
+                piecesNeeded = boxesNeeded * piecesPerBox,
+                piecesWithBuffer = boxesWithBuffer * piecesPerBox;
+            tAW.innerHTML = wallArea.toFixed(2) + ' <small>m²</small>';
+            sSLW.textContent = size + ' cm';
+            tBW.innerHTML = Math.ceil(boxesNeeded) + ' <small>dus</small>';
+            tWBW.innerHTML = Math.ceil(boxesWithBuffer) + ' <small>dus</small>';
+            tPW.textContent = Math.ceil(piecesNeeded);
+            tPWBW.textContent = Math.ceil(piecesWithBuffer);
+            var msg = 'Halo BARIKO PUTERA, saya mau konsultasi kebutuhan keramik/granit dinding:%0A- Tinggi: ' + height +
+                ' m, Panjang: ' + length + ' m, Lebar: ' + width + ' m%0A- Luas dinding: ' + wallArea.toFixed(2) +
+                ' m²%0A- Ukuran: ' + size + ' cm%0A- Estimasi dus (+10%): ' + Math.ceil(boxesWithBuffer) +
+                ' dus%0A- Total keping: ' + Math.ceil(piecesWithBuffer) + ' pcs%0A%0ATerima kasih.';
+            wALW.href = 'https://' + _0x2b3c(0) + '?text=' + encodeURIComponent(msg);
+            rDW.classList.add('show');
+            rDW.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        wH.addEventListener('input', function() { this.style.borderColor = '';
+            eAW.classList.remove('show');
+            rDW.classList.remove('show'); });
+        wL.addEventListener('input', function() { this.style.borderColor = '';
+            eAW.classList.remove('show');
+            rDW.classList.remove('show'); });
+        wW.addEventListener('input', function() { this.style.borderColor = '';
+            eAW.classList.remove('show');
+            rDW.classList.remove('show'); });
+
+        // ============================================================
+        // PRINT (LANTAI & DINDING)
+        // ============================================================
+        window.printResult = function(mode) {
+            var aT, sT, dT, dB, pT, pB, dims;
+            if (mode === 'wall') {
+                aT = tAW.innerText;
+                sT = sSLW.innerText;
+                dT = tBW.innerText;
+                dB = tWBW.innerText;
+                pT = tPW.innerText;
+                pB = tPWBW.innerText;
+                var h = parseFloat(wH.value) || 0;
+                var p = parseFloat(wL.value) || 0;
+                var l = parseFloat(wW.value) || 0;
+                dims = 'Tinggi: ' + h.toFixed(2) + ' m, Panjang: ' + p.toFixed(2) + ' m, Lebar: ' + l.toFixed(2) + ' m';
+            } else {
+                aT = tA.innerText;
+                sT = sSL.innerText;
+                dT = tB.innerText;
+                dB = tWB.innerText;
+                pT = tP.innerText;
+                pB = tPWB.innerText;
+                var p2 = parseFloat(rL.value) || 0;
+                var l2 = parseFloat(rW.value) || 0;
+                dims = 'Panjang: ' + p2.toFixed(2) + ' m, Lebar: ' + l2.toFixed(2) + ' m';
+            }
+            var win = window.open('', '_blank');
+            win.document.write(
+                '<html><head><title>Hasil Kalkulator Keramik</title><style>body{font-family:Inter,sans-serif;padding:1.5rem;max-width:400px;margin:auto;color:#111111;font-size:13px;}h2{font-family:Poppins,sans-serif;font-weight:600;color:#111111;font-size:1.2rem;}.dims{background:#f0f0f0;padding:0.4rem 0.7rem;border-radius:30px;font-size:0.7rem;margin-bottom:0.5rem;text-align:center;}.grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin:1rem 0;}.item{border:1px solid #d6d6d6;border-radius:12px;padding:0.6rem;text-align:center;}.label{font-size:0.6rem;text-transform:uppercase;color:#595959;}.value{font-size:1.1rem;font-weight:700;margin-top:0.1rem;}.footer{margin-top:1.5rem;font-size:0.6rem;color:#7a7a7a;border-top:1px solid #e5e5e5;padding-top:0.8rem;text-align:center;}</style></head><body><h2>📐 Estimasi Kebutuhan ' +
+                (mode === 'wall' ? '(Dinding)' : '(Lantai)') +
+                '</h2><div style="margin-bottom:0.2rem;color:#404040;font-size:0.8rem;">BARIKO PUTERA</div><div class="dims">' +
+                dims +
+                '</div><div class="grid"><div class="item"><div class="label">Luas</div><div class="value">' + aT +
+                '</div></div><div class="item"><div class="label">Ukuran</div><div class="value">' + sT +
+                '</div></div><div class="item"><div class="label">Dus</div><div class="value">' + dT +
+                '</div></div><div class="item"><div class="label">Dus +10%</div><div class="value">' + dB +
+                '</div></div><div class="item"><div class="label">Keping</div><div class="value">' + pT +
+                ' pcs</div></div><div class="item"><div class="label">Keping +10%</div><div class="value">' + pB +
+                ' pcs</div></div></div><div style="background:#f0f0f0;padding:0.5rem;border-radius:40px;font-size:0.7rem;text-align:center;">Hasil estimasi · konsultasi dengan tim ahli</div><div class="footer">Dicetak dari Kalkulator BARIKO PUTERA · ' +
+                new Date().toLocaleDateString('id-ID') +
+                '</div></body></html>'
+            );
+            win.document.close();
+            win.print();
+        };
+
+        // ============================================================
+        // RUMAH (MULTI ROOM) — dengan opsi "Belum diketahui"
+        // ============================================================
+        var roomContainer = document.getElementById('roomContainer'),
+            addRoomBtn = document.getElementById('addRoomBtn'),
+            finishBtn = document.getElementById('finishBtn'),
+            summaryMulti = document.getElementById('summaryMulti');
+
+        // Data ukuran keramik, ditambah opsi "Belum diketahui" di awal
+        var tileDataWithUnknown = [
+            { size: '', label: 'Belum diketahui', area: 0, pieces: 0 },
+            { size: '25x25', label: '25×25 cm', area: 1.00, pieces: 16 },
+            { size: '25x40', label: '25×40 cm', area: 1.00, pieces: 10 },
+            { size: '30x30', label: '30×30 cm', area: 0.99, pieces: 11 },
+            { size: '30x60', label: '30×60 cm', area: 0.90, pieces: 5 },
+            { size: '40x40', label: '40×40 cm', area: 1.00, pieces: 6 },
+            { size: '50x50', label: '50×50 cm', area: 1.00, pieces: 4 },
+            { size: '60x60', label: '60×60 cm', area: 1.44, pieces: 4 },
+            { size: '60x120', label: '60×120 cm', area: 1.44, pieces: 2 }
+        ];
+
+        // --- Buat baris ruangan baru ---
+        function createRow() {
+            var row = document.createElement('div');
+            row.className = 'room-row';
+
+            var name = document.createElement('input');
+            name.type = 'text';
+            name.className = 'room-name';
+            name.placeholder = 'Nama';
+            row.appendChild(name);
+
+            var length = document.createElement('input');
+            length.type = 'number';
+            length.className = 'room-length';
+            length.step = '0.01';
+            length.min = '0.1';
+            length.placeholder = 'P';
+            row.appendChild(length);
+
+            var width = document.createElement('input');
+            width.type = 'number';
+            width.className = 'room-width';
+            width.step = '0.01';
+            width.min = '0.1';
+            width.placeholder = 'L';
+            row.appendChild(width);
+
+            var area = document.createElement('span');
+            area.className = 'room-area';
+            area.textContent = '0 m²';
+            row.appendChild(area);
+
+            var select = document.createElement('select');
+            select.className = 'room-tile-select';
+            // Tambahkan opsi dari tileDataWithUnknown
+            tileDataWithUnknown.forEach(function(t) {
+                var opt = document.createElement('option');
+                opt.value = t.size;
+                opt.dataset.area = t.area;
+                opt.dataset.pieces = t.pieces;
+                opt.textContent = t.label + (t.size ? ' (' + t.area.toFixed(2) + ' m²)' : '');
+                select.appendChild(opt);
+            });
+            // Default pilih indeks 0 ("Belum diketahui")
+            select.selectedIndex = 0;
+            row.appendChild(select);
+
+            var dus = document.createElement('span');
+            dus.className = 'room-dus';
+            dus.textContent = '0';
+            row.appendChild(dus);
+
+            var del = document.createElement('button');
+            del.className = 'room-delete';
+            del.type = 'button';
+            del.innerHTML = '<i class="fas fa-times"></i>';
+            del.addEventListener('click', function() {
+                if (roomContainer.children.length > 1) {
+                    row.remove();
+                    updateAll();
+                    summaryMulti.classList.remove('show');
+                } else {
+                    var ni = row.querySelector('.room-name');
+                    if (ni) ni.focus();
+                }
+            });
+            row.appendChild(del);
+
+            [length, width].forEach(function(inp) {
+                inp.addEventListener('input', function() {
+                    updateRow(row);
+                    summaryMulti.classList.remove('show');
+                });
+            });
+            select.addEventListener('change', function() {
+                updateRow(row);
+                summaryMulti.classList.remove('show');
+            });
+
+            return row;
+        }
+
+        // --- Update satu baris ---
+        function updateRow(row) {
+            var length = parseFloat(row.querySelector('.room-length').value) || 0;
+            var width = parseFloat(row.querySelector('.room-width').value) || 0;
+            var areaVal = length * width;
+            var areaSpan = row.querySelector('.room-area');
+            areaSpan.textContent = areaVal > 0 ? areaVal.toFixed(2) + ' m²' : '0 m²';
+
+            var select = row.querySelector('.room-tile-select');
+            var selected = select.options[select.selectedIndex];
+            var tileArea = parseFloat(selected.dataset.area) || 0;
+            var dusVal = 0;
+            // Jika ukuran belum diketahui (area = 0) atau luas 0, dus = 0
+            if (areaVal > 0 && tileArea > 0) {
+                dusVal = Math.ceil(areaVal / tileArea);
+            }
+            row.querySelector('.room-dus').textContent = dusVal;
+        }
+
+        // --- Update semua baris ---
+        function updateAll() {
+            var rows = roomContainer.querySelectorAll('.room-row');
+            rows.forEach(function(row) { updateRow(row); });
+        }
+
+        // --- Tambah ruangan ---
+        addRoomBtn.addEventListener('click', function() {
+            var row = createRow();
+            roomContainer.appendChild(row);
+            updateRow(row);
+            row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            var ni = row.querySelector('.room-name');
+            if (ni) ni.focus();
+            summaryMulti.classList.remove('show');
+        });
+
+        // --- Kumpulkan data ruangan ---
+        function collectRoomData() {
+            var rows = roomContainer.querySelectorAll('.room-row');
+            var data = [];
+            var totalArea = 0;
+            var totalDus = 0;
+            rows.forEach(function(row, index) {
+                var name = row.querySelector('.room-name').value.trim() || 'Ruangan ' + (index + 1);
+                var length = parseFloat(row.querySelector('.room-length').value) || 0;
+                var width = parseFloat(row.querySelector('.room-width').value) || 0;
+                var areaVal = length * width;
+                var select = row.querySelector('.room-tile-select');
+                var selected = select.options[select.selectedIndex];
+                var size = selected.value;
+                var tileArea = parseFloat(selected.dataset.area) || 0;
+                var dusVal = 0;
+                if (areaVal > 0 && tileArea > 0) {
+                    dusVal = Math.ceil(areaVal / tileArea);
+                }
+                data.push({
+                    name: name,
+                    length: length,
+                    width: width,
+                    area: areaVal,
+                    size: size,
+                    dus: dusVal,
+                    tileArea: tileArea,
+                    sizeLabel: selected.textContent
+                });
+                totalArea += areaVal;
+                totalDus += dusVal;
+            });
+            return { rows: data, totalArea: totalArea, totalDus: totalDus };
+        }
+
+        // --- Render tabel Excel-like ---
+        function renderTable(summaryData) {
+            var data = summaryData.rows;
+            var totalArea = summaryData.totalArea;
+            var totalDus = summaryData.totalDus;
+
+            // Jika belum ada ruangan yang diisi luasnya, tampilkan pesan
+            var hasData = data.some(function(r) { return r.area > 0; });
+            if (data.length === 0 || !hasData) {
+                summaryMulti.innerHTML =
+                    '<div class="empty-state"><i class="fas fa-info-circle"></i> Silakan isi panjang &amp; lebar ruangan terlebih dahulu.</div>';
+                summaryMulti.classList.add('show');
+                return;
+            }
+
+            var html = '';
+            html += '<div class="table-caption">';
+            html += '<span><i class="fas fa-table"></i> <strong>Rincian Ruangan</strong></span>';
+            html += '<span class="badge-total">Total ' + totalDus + ' dus</span>';
+            html += '</div>';
+
+            html += '<div class="table-wrap">';
+            html += '<table>';
+            html += '<thead><tr>';
+            html += '<th>No</th>';
+            html += '<th>Nama Ruangan</th>';
+            html += '<th>Panjang (m)</th>';
+            html += '<th>Lebar (m)</th>';
+            html += '<th>Luas (m²)</th>';
+            html += '<th>Ukuran (cm)</th>';
+            html += '<th>Kebutuhan (dus)</th>';
+            html += '</tr></thead>';
+            html += '<tbody>';
+
+            var no = 0;
+            data.forEach(function(r) {
+                // tetap tampilkan semua ruangan, meskipun luas 0
+                no++;
+                var sizeDisplay = r.size || '—';
+                var dusDisplay = (r.area > 0 && r.tileArea > 0) ? r.dus : '—';
+                html += '<tr>';
+                html += '<td class="num">' + no + '</td>';
+                html += '<td>' + r.name + '</td>';
+                html += '<td class="num">' + r.length.toFixed(2) + '</td>';
+                html += '<td class="num">' + r.width.toFixed(2) + '</td>';
+                html += '<td class="num">' + r.area.toFixed(2) + '</td>';
+                html += '<td>' + sizeDisplay + '</td>';
+                html += '<td class="num"><strong>' + dusDisplay + '</strong></td>';
+                html += '</tr>';
+            });
+
+            // Total row (hanya jika ada luas > 0)
+            if (totalArea > 0) {
+                html += '<tr class="total-row">';
+                html += '<td colspan="4" style="text-align:right;">TOTAL</td>';
+                html += '<td class="num"><strong>' + totalArea.toFixed(2) + '</strong></td>';
+                html += '<td></td>';
+                html += '<td class="num"><strong>' + totalDus + '</strong></td>';
+                html += '</tr>';
+            }
+
+            html += '</tbody></table>';
+            html += '</div>';
+
+            // WA + Print buttons
+            var waMsg =
+                'Halo BARIKO PUTERA, saya mau konsultasi kebutuhan keramik/granit untuk seluruh rumah (tanpa buffer):%0A%0A';
+            data.forEach(function(r) {
+                if (r.area > 0 && r.tileArea > 0) {
+                    waMsg += r.name + ': ' + r.length.toFixed(2) + 'm × ' + r.width.toFixed(2) + 'm = ' + r.area
+                        .toFixed(2) + ' m², ' + (r.size || 'belum diketahui') + ' cm, ' + r.dus + ' dus%0A';
+                } else {
+                    waMsg += r.name + ': ' + r.length.toFixed(2) + 'm × ' + r.width.toFixed(2) + 'm = ' + r.area
+                        .toFixed(2) + ' m², (ukuran belum dipilih)%0A';
+                }
+            });
+            waMsg += '%0ATotal luas: ' + totalArea.toFixed(2) + ' m²%0ATotal dus (pembulatan ke atas): ' + totalDus +
+                ' dus%0A%0ATerima kasih.';
+
+            html += '<div class="action-group-multi">';
+            html +=
+                '<a class="btn-wa" target="_blank" href="https://' + _0x2b3c(0) + '?text=' + encodeURIComponent(waMsg) +
+                '" style="display:flex;align-items:center;justify-content:center;gap:0.4rem;background:#25b66b;color:white;border:none;border-radius:40px;padding:0.6rem;font-weight:600;font-size:0.8rem;text-decoration:none;min-height:40px;"><i class="fab fa-whatsapp"></i> Konsultasi WA</a>';
+            html +=
+                '<button class="btn-print" onclick="printMultiResult()" style="margin-top:0.3rem;background:transparent;color:#333333;border:1px solid #cccccc;border-radius:40px;padding:0.5rem;font-weight:500;font-size:0.75rem;display:flex;align-items:center;justify-content:center;gap:0.3rem;cursor:pointer;width:100%;min-height:38px;"><i class="fas fa-file-pdf"></i> Export PDF</button>';
+            html += '</div>';
+
+            summaryMulti.innerHTML = html;
+            summaryMulti.classList.add('show');
+            summaryMulti.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // --- Tombol Selesai ---
+        finishBtn.addEventListener('click', function() {
+            var summaryData = collectRoomData();
+            renderTable(summaryData);
+        });
+
+        // --- Print / Export PDF untuk Multi (Excel-like) ---
+        window.printMultiResult = function() {
+            var summaryData = collectRoomData();
+            var data = summaryData.rows;
+            var totalArea = summaryData.totalArea;
+            var totalDus = summaryData.totalDus;
+
+            var hasData = data.some(function(r) { return r.area > 0; });
+            if (!hasData) {
+                alert('Tidak ada data ruangan yang valid untuk dicetak.');
+                return;
+            }
+
+            var win = window.open('', '_blank');
+            var tableRows = '';
+            var no = 0;
+            data.forEach(function(r) {
+                no++;
+                var sizeDisplay = r.size || '—';
+                var dusDisplay = (r.area > 0 && r.tileArea > 0) ? r.dus : '—';
+                tableRows += '<tr>';
+                tableRows += '<td style="text-align:right;padding:5px 8px;border:1px solid #d4d4d4;">' + no + '</td>';
+                tableRows += '<td style="padding:5px 8px;border:1px solid #d4d4d4;">' + r.name + '</td>';
+                tableRows += '<td style="text-align:right;padding:5px 8px;border:1px solid #d4d4d4;">' + r.length
+                    .toFixed(2) + '</td>';
+                tableRows += '<td style="text-align:right;padding:5px 8px;border:1px solid #d4d4d4;">' + r.width
+                    .toFixed(2) + '</td>';
+                tableRows += '<td style="text-align:right;padding:5px 8px;border:1px solid #d4d4d4;">' + r.area
+                    .toFixed(2) + '</td>';
+                tableRows += '<td style="padding:5px 8px;border:1px solid #d4d4d4;">' + sizeDisplay + '</td>';
+                tableRows += '<td style="text-align:right;padding:5px 8px;border:1px solid #d4d4d4;font-weight:700;">' +
+                    dusDisplay + '</td>';
+                tableRows += '</tr>';
+            });
+
+            // Total row
+            if (totalArea > 0) {
+                tableRows += '<tr style="background:#ececec;font-weight:700;">';
+                tableRows += '<td colspan="4" style="text-align:right;padding:6px 8px;border:1px solid #d4d4d4;border-top:2px solid #111111;">TOTAL</td>';
+                tableRows += '<td style="text-align:right;padding:6px 8px;border:1px solid #d4d4d4;border-top:2px solid #111111;">' +
+                    totalArea.toFixed(2) + '</td>';
+                tableRows += '<td style="padding:6px 8px;border:1px solid #d4d4d4;border-top:2px solid #111111;"></td>';
+                tableRows += '<td style="text-align:right;padding:6px 8px;border:1px solid #d4d4d4;border-top:2px solid #111111;">' +
+                    totalDus + '</td>';
+                tableRows += '</tr>';
+            }
+
+            var html = '<html><head><title>Estimasi Kebutuhan Seluruh Rumah</title>';
+            html +=
+                '<style>body{font-family:"Inter",-apple-system,sans-serif;padding:24px 30px;max-width:780px;margin:auto;color:#111111;font-size:12px;background:#fff;}';
+            html +=
+                'h2{font-family:"Poppins",sans-serif;font-weight:600;font-size:1.4rem;color:#111111;margin:0 0 2px 0;}';
+            html += '.sub{color:#404040;font-size:0.85rem;margin-bottom:16px;}';
+            html +=
+                'table{width:100%;border-collapse:collapse;font-size:11px;margin:10px 0 6px;border:1px solid #d4d4d4;}';
+            html += 'th{background:#111111;color:#fff;font-weight:600;padding:6px 8px;border:1px solid #111111;text-align:left;font-size:11px;}';
+            html += 'th.num{text-align:right;}';
+            html +=
+                'td{background:#fff;padding:5px 8px;border:1px solid #d4d4d4;vertical-align:middle;}';
+            html += 'tr:nth-child(even) td{background:#f7f7f7;}';
+            html +=
+                '.footer{margin-top:18px;font-size:10px;color:#7a7a7a;border-top:1px solid #e5e5e5;padding-top:12px;text-align:center;}';
+            html += '.badge-print{display:inline-block;background:#111111;color:#fff;padding:2px 14px;border-radius:30px;font-size:10px;font-weight:600;margin-top:4px;}';
+            html += 'hr{border:0;border-top:1px solid #e5e5e5;margin:10px 0;}';
+            html += '.note{font-size:10px;color:#595959;margin-top:4px;}';
+            html +=
+                '@media print{body{padding:16px;}th{background:#111111 !important;color:#fff !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}tr:nth-child(even) td{background:#f7f7f7 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}.total-row td{background:#ececec !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}}</style>';
+            html += '</head><body>';
+
+            html += '<h2>🏠 Estimasi Kebutuhan Seluruh Rumah</h2>';
+            html += '<div class="sub">BARIKO PUTERA · Toko Keramik &amp; Granit</div>';
+
+            html += '<table>';
+            html += '<thead><tr>';
+            html += '<th style="text-align:right;width:40px;">No</th>';
+            html += '<th style="min-width:110px;">Nama Ruangan</th>';
+            html += '<th style="text-align:right;width:70px;">Panjang (m)</th>';
+            html += '<th style="text-align:right;width:70px;">Lebar (m)</th>';
+            html += '<th style="text-align:right;width:75px;">Luas (m²)</th>';
+            html += '<th style="width:80px;">Ukuran (cm)</th>';
+            html += '<th style="text-align:right;width:70px;">Kebutuhan (dus)</th>';
+            html += '</tr></thead>';
+            html += '<tbody>' + tableRows + '</tbody>';
+            html += '</table>';
+
+            html += '<div class="badge-print">Total ' + totalDus + ' dus</div>';
+            html += '<div class="note"><i class="fas fa-info-circle"></i> Hasil estimasi berdasarkan input yang dimasukkan. Konsultasi dengan tim ahli disarankan.</div>';
+            html += '<hr />';
+            html += '<div class="footer">Dicetak dari Kalkulator BARIKO PUTERA · ' + new Date().toLocaleDateString(
+                'id-ID') + ' · ' + new Date().toLocaleTimeString('id-ID') + '</div>';
+
+            html += '</body></html>';
+
+            win.document.write(html);
+            win.document.close();
+            setTimeout(function() {
+                win.print();
+            }, 300);
+        };
+
+        // ============================================================
+        // INISIALISASI — satu baris default dengan "Belum diketahui"
+        // ============================================================
+        var initRow = createRow();
+        roomContainer.appendChild(initRow);
+        updateRow(initRow);
+    </script>
+</body>
+</html>

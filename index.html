@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Bariko Putera · Keramik & Granit</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    :root {
+      --bg: #f4f4f2;
+      --card: #ffffff;
+      --item: #ffffff;
+      --item-hover: #fafaf9;
+      --ink: #0a0a0a;
+      --muted: #6b6b66;
+      --line: rgba(10, 10, 10, 0.09);
+      --line-strong: rgba(10, 10, 10, 0.24);
+      --chip: rgba(10, 10, 10, 0.06);
+      --cta-bg: #0a0a0a;
+      --cta-ink: #ffffff;
+      --shadow: 0 1px 2px rgba(10, 10, 10, 0.04), 0 28px 56px -28px rgba(10, 10, 10, 0.22);
+    }
+    [data-theme="dark"] {
+      --bg: #000000;
+      --card: #000000;
+      --item: #0a0a0a;
+      --item-hover: #141414;
+      --ink: #f5f5f5;
+      --muted: #a3a3a3;
+      --line: rgba(255, 255, 255, 0.10);
+      --line-strong: rgba(255, 255, 255, 0.28);
+      --chip: rgba(255, 255, 255, 0.08);
+      --cta-bg: #f5f5f5;
+      --cta-ink: #000000;
+      --shadow: none;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    body {
+      position: relative;
+      background: var(--bg);
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      padding: 20px 14px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* pola ubin berlian, terinspirasi logo */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='60' viewBox='0 0 80 48'%3E%3Cpath d='M-10 -6L90 54M-10 54L90 -6' fill='none' stroke='%230a0a0a' stroke-opacity='.075' stroke-width='1'/%3E%3C/svg%3E");
+      background-size: 100px 60px;
+      -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 0%, transparent 72%);
+      mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 0%, transparent 72%);
+    }
+    [data-theme="dark"] body::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='60' viewBox='0 0 80 48'%3E%3Cpath d='M-10 -6L90 54M-10 54L90 -6' fill='none' stroke='%23ffffff' stroke-opacity='.085' stroke-width='1'/%3E%3C/svg%3E");
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    a:focus-visible, button:focus-visible, summary:focus-visible {
+      outline: 2px solid var(--ink);
+      outline-offset: 3px;
+    }
+
+    /* tombol tema */
+    .theme-toggle {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      background: var(--item);
+      color: var(--ink);
+      border: 1px solid var(--line);
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s, background 0.3s;
+      z-index: 10;
+    }
+    .theme-toggle:hover { transform: scale(1.06); border-color: var(--line-strong); }
+    .theme-toggle:active { transform: scale(0.94); }
+
+    /* kartu utama */
+    .glass-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 30px 18px 18px;
+      box-shadow: var(--shadow);
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    /* animasi masuk */
+    .reveal {
+      animation: rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+      animation-delay: calc(var(--i, 0) * 70ms);
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(12px); }
+    }
+
+    /* profil */
+    .profile {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .profile-img {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto 16px;
+      border: 3px solid var(--card);
+      box-shadow: 0 0 0 1px var(--line-strong), 0 14px 32px -10px rgba(10, 10, 10, 0.35);
+    }
+    [data-theme="dark"] .profile-img {
+      border-color: #000;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22);
+    }
+    .profile h1 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 21px;
+      letter-spacing: 0.14em;
+      color: var(--ink);
+    }
+    .profile p {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 8px;
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .profile p::before,
+    .profile p::after {
+      content: "";
+      width: 26px;
+      height: 1px;
+      background: var(--line-strong);
+    }
+
+    /* tautan */
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .link-grid, .social-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .link-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 16px;
+      background: var(--item);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      text-decoration: none;
+      color: var(--ink);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s, background 0.2s, box-shadow 0.25s;
+    }
+    .link-item:hover {
+      transform: translateY(-2px);
+      background: var(--item-hover);
+      border-color: var(--line-strong);
+      box-shadow: 0 14px 28px -16px rgba(10, 10, 10, 0.28);
+    }
+    [data-theme="dark"] .link-item:hover { box-shadow: none; }
+    .link-item:active {
+      transform: scale(0.98);
+      transition-duration: 0.06s;
+    }
+
+    .link-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+      background: var(--chip);
+      color: var(--ink);
+    }
+    .link-text { flex: 1; min-width: 0; }
+    .link-text .title {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 1.3;
+    }
+    .link-text .sub {
+      font-size: 11.5px;
+      color: var(--muted);
+      font-weight: 400;
+      margin-top: 2px;
+      line-height: 1.35;
+    }
+    .link-arrow {
+      font-size: 12px;
+      color: var(--muted);
+      opacity: 0.6;
+      transition: opacity 0.2s, transform 0.25s;
+    }
+    .link-item:hover .link-arrow { opacity: 1; transform: translateX(3px); }
+
+    /* tombol utama: WhatsApp */
+    .link-item.whatsapp {
+      padding: 15px 18px;
+      border-radius: 22px;
+      background: var(--cta-bg);
+      border-color: transparent;
+      color: var(--cta-ink);
+      box-shadow: 0 16px 32px -16px rgba(10, 10, 10, 0.55);
+    }
+    [data-theme="dark"] .link-item.whatsapp { box-shadow: none; }
+    .link-item.whatsapp:hover {
+      background: var(--cta-bg);
+      border-color: transparent;
+      box-shadow: 0 22px 40px -16px rgba(10, 10, 10, 0.6);
+    }
+    [data-theme="dark"] .link-item.whatsapp:hover { background: #ffffff; box-shadow: none; }
+    .link-item.whatsapp .link-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      font-size: 22px;
+      background: #25d366;
+      color: #ffffff;
+    }
+    .link-item.whatsapp .link-text .title { font-size: 15px; }
+    .link-item.whatsapp .link-text .sub { color: inherit; opacity: 0.7; }
+    .link-item.whatsapp .link-arrow { color: inherit; }
+
+    /* kartu kotak: visualisasi & kalkulator */
+    .link-item.tile {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px;
+      border-radius: 20px;
+      min-height: 124px;
+    }
+    .link-item.tile .link-text { flex: none; width: 100%; }
+    .link-item.tile .link-arrow {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+    }
+    .badge {
+      position: absolute;
+      top: 16px;
+      right: 40px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--cta-bg);
+      color: var(--cta-ink);
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: 1.3;
+    }
+
+    /* pembatas label */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 6px;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .section-label::before,
+    .section-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    /* sosial media */
+    .link-item.social {
+      justify-content: center;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 16px;
+      font-weight: 600;
+      font-size: 13.5px;
+    }
+    .link-item.social i { font-size: 17px; }
+
+    /* kritik & saran (bisa dilipat) */
+    .feedback-container { margin-bottom: 4px; }
+    .feedback-card {
+      background: var(--item);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      transition: border-color 0.2s, background 0.3s;
+    }
+    .feedback-card[open] { border-color: var(--line-strong); }
+    .feedback-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      list-style: none;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--ink);
+      user-select: none;
+    }
+    .feedback-title::-webkit-details-marker { display: none; }
+    .feedback-title > i:first-child { color: var(--muted); }
+    .feedback-chevron {
+      margin-left: auto;
+      font-size: 11px;
+      color: var(--muted);
+      transition: transform 0.25s;
+    }
+    .feedback-card[open] .feedback-chevron { transform: rotate(180deg); }
+    .feedback-body { padding: 0 16px 16px; }
+    .feedback-card[open] .feedback-body { animation: rise 0.35s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+
+    .feedback-textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 13px;
+      line-height: 1.5;
+      resize: vertical;
+      min-height: 84px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .feedback-textarea::placeholder { color: var(--muted); opacity: 0.8; }
+    .feedback-textarea:focus {
+      outline: none;
+      border-color: var(--ink);
+      box-shadow: 0 0 0 3px var(--chip);
+    }
+    .feedback-info {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 10.5px;
+      color: var(--muted);
+      padding: 0 2px;
+    }
+    .feedback-submit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: var(--cta-bg);
+      color: var(--cta-ink);
+      border: none;
+      border-radius: 14px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      transition: transform 0.2s, opacity 0.2s;
+      margin-top: 12px;
+      width: 100%;
+      font-family: 'Inter', sans-serif;
+    }
+    .feedback-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+    .feedback-submit:active { transform: scale(0.98); }
+    .feedback-submit.loading { pointer-events: none; opacity: 0.8; }
+    .feedback-submit-spinner { display: none; animation: spin 0.8s linear infinite; }
+    .feedback-submit.loading .feedback-submit-text,
+    .feedback-submit.loading .feedback-submit-icon { display: none; }
+    .feedback-submit.loading .feedback-submit-spinner { display: inline-block; }
+    .feedback-success, .feedback-error {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 14px;
+      margin-top: 10px;
+      border-radius: 14px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .feedback-success { background: rgba(16, 185, 129, 0.10); color: #0b7e5a; }
+    .feedback-error { background: rgba(239, 68, 68, 0.08); color: #b91c1c; }
+    [data-theme="dark"] .feedback-success { color: #34d399; }
+    [data-theme="dark"] .feedback-error { color: #f87171; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .footer {
+      text-align: center;
+      font-size: 10px;
+      color: var(--muted);
+      padding-top: 18px;
+      letter-spacing: 0.08em;
+    }
+
+    /* HP kecil */
+    @media (max-width: 380px) {
+      body { padding: 14px 10px; }
+      .glass-card { padding: 26px 14px 14px; border-radius: 26px; }
+      .profile-img { width: 84px; height: 84px; }
+      .profile h1 { font-size: 18px; letter-spacing: 0.12em; }
+      .profile p { font-size: 9.5px; letter-spacing: 0.18em; }
+      .profile p::before, .profile p::after { width: 18px; }
+      .link-item { padding: 11px 13px; }
+      .link-item.whatsapp { padding: 13px 14px; }
+      .link-item.tile { padding: 14px; min-height: 112px; }
+      .link-text .title { font-size: 13px; }
+      .link-text .sub { font-size: 10.5px; }
+      .link-item.tile .link-arrow { display: none; }
+      .badge { right: 14px; top: 14px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .feedback-card[open] .feedback-body { animation: none; }
+      .link-item, .link-arrow, .theme-toggle, .feedback-submit { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="theme-toggle" id="theme-btn" aria-label="Toggle tema">
+      <i class="fas fa-moon"></i>
+    </button>
+
+    <div class="glass-card">
+      <!-- profile -->
+      <div class="profile reveal" style="--i:0">
+        <img src="logo.png" alt="Bariko Putera" class="profile-img" />
+        <h1>BARIKO PUTERA</h1>
+        <p>Toko Keramik &amp; Granit</p>
+      </div>
+
+      <!-- links -->
+      <div class="links">
+        <a href="https://wa.me/6281337710483" class="link-item whatsapp reveal" style="--i:1" target="_blank">
+          <span class="link-icon"><i class="fab fa-whatsapp"></i></span>
+          <div class="link-text">
+            <div class="title">Hubungi WhatsApp</div>
+            <div class="sub">Chat langsung dengan CS</div>
+          </div>
+          <span class="link-arrow"><i class="fas fa-chevron-right"></i></span>
+        </a>
+
+        <div class="link-grid">
+          <!-- GANTI href di bawah dengan link website visualisasi ruangan -->
+          <a href="./ruangan/index.html" class="link-item tile visualizer reveal" style="--i:2">
+            <span class="link-icon"><i class="fas fa-couch"></i></span>
+            <span class="badge">Baru</span>
+            <span class="link-arrow"><i class="fas fa-chevron-right"></i></span>
+            <div class="link-text">
+              <div class="title">Visualisasi Ruangan</div>
+              <div class="sub">Coba keramik di ruangan Anda</div>
+            </div>
+          </a>
+
+          <a href="./kalkulator/index.html" class="link-item tile calculator reveal" style="--i:3">
+            <span class="link-icon"><i class="fas fa-calculator"></i></span>
+            <span class="link-arrow"><i class="fas fa-chevron-right"></i></span>
+            <div class="link-text">
+              <div class="title">Kalkulator Keramik</div>
+              <div class="sub">Hitung kebutuhan akurat</div>
+            </div>
+          </a>
+        </div>
+
+        <a href="https://maps.app.goo.gl/evm9xMJvSKbkQyzt7" class="link-item location reveal" style="--i:4" target="_blank">
+          <span class="link-icon"><i class="fas fa-map-marker-alt"></i></span>
+          <div class="link-text">
+            <div class="title">Kunjungi Showroom</div>
+            <div class="sub">Jl. Lingkar Timur Penusupan, Desa Penusupan</div>
+          </div>
+          <span class="link-arrow"><i class="fas fa-chevron-right"></i></span>
+        </a>
+
+        <div class="section-label reveal" style="--i:5">Ikuti Kami</div>
+
+        <div class="social-row">
+          <a href="https://tiktok.com/@barikoputera" class="link-item social tiktok reveal" style="--i:6" target="_blank" aria-label="TikTok Bariko Putera">
+            <i class="fab fa-tiktok"></i><span>TikTok</span>
+          </a>
+          <a href="https://facebook.com/61580002512516/" class="link-item social facebook reveal" style="--i:7" target="_blank" aria-label="Facebook Bariko Putera">
+            <i class="fab fa-facebook"></i><span>Facebook</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- feedback -->
+      <div class="feedback-container reveal" style="--i:8">
+        <details class="feedback-card">
+          <summary class="feedback-title">
+            <i class="fas fa-comment-dots"></i>
+            <span>Kritik &amp; Saran</span>
+            <i class="fas fa-chevron-down feedback-chevron"></i>
+          </summary>
+          <div class="feedback-body">
+            <form id="feedback-form">
+              <textarea id="feedback-message" class="feedback-textarea" placeholder="Tulis kritik atau saran Anda di sini… 100% anonim, tidak menyimpan data pribadi." maxlength="500" rows="3"></textarea>
+              <div class="feedback-info">
+                <span><i class="fas fa-shield-alt" style="margin-right:4px;"></i>Anonim & aman</span>
+                <span class="feedback-counter">0/500</span>
+              </div>
+              <button type="submit" class="feedback-submit" id="feedback-submit">
+                <span class="feedback-submit-text">Kirim Feedback</span>
+                <i class="fas fa-paper-plane feedback-submit-icon"></i>
+                <i class="fas fa-spinner feedback-submit-spinner"></i>
+              </button>
+            </form>
+            <div class="feedback-success" id="feedback-success">
+              <i class="fas fa-check-circle"></i> Terima kasih! Feedback terkirim.
+            </div>
+            <div class="feedback-error" id="feedback-error">
+              <i class="fas fa-exclamation-circle"></i> Gagal, coba lagi.
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <div class="footer reveal" style="--i:9">© 2025 Bariko Putera · All rights reserved</div>
+    </div>
+  </div>
+
+  <script>
+    // theme
+    const btn = document.getElementById('theme-btn');
+    const isDark = localStorage.getItem('theme') === 'dark' || window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (isDark) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      btn.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+    btn.addEventListener('click', () => {
+      const dark = document.documentElement.hasAttribute('data-theme');
+      if (dark) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+        btn.innerHTML = '<i class="fas fa-moon"></i>';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        btn.innerHTML = '<i class="fas fa-sun"></i>';
+      }
+    });
+
+    // emailjs
+    emailjs.init("vQEncuGNYSx5Prr_n");
+    const form = document.getElementById('feedback-form');
+    const msg = document.getElementById('feedback-message');
+    const counter = document.querySelector('.feedback-counter');
+    const submitBtn = document.getElementById('feedback-submit');
+    const successDiv = document.getElementById('feedback-success');
+    const errorDiv = document.getElementById('feedback-error');
+
+    msg.addEventListener('input', () => {
+      const len = msg.value.length;
+      counter.textContent = `${len}/500`;
+      if (len > 450) counter.style.color = '#ef4444';
+      else if (len > 400) counter.style.color = '#f59e0b';
+      else counter.style.color = '';
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const text = msg.value.trim();
+      if (text.length < 8) { alert('Minimal 8 karakter.'); return; }
+
+      submitBtn.classList.add('loading');
+      successDiv.style.display = 'none';
+      errorDiv.style.display = 'none';
+
+      emailjs.send('service_grynllw', 'template_g16eo9k', {
+        message: text,
+        to_email: 'muhammadrizqoa@gmail.com'
+      }).then(() => {
+        submitBtn.classList.remove('loading');
+        successDiv.style.display = 'flex';
+        msg.value = '';
+        counter.textContent = '0/500';
+        counter.style.color = '';
+        setTimeout(() => successDiv.style.display = 'none', 5000);
+      }).catch(() => {
+        submitBtn.classList.remove('loading');
+        errorDiv.style.display = 'flex';
+        setTimeout(() => errorDiv.style.display = 'none', 5000);
+      });
+    });
+  </script>
+</body>
+</html>
