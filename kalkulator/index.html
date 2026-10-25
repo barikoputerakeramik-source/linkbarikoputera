@@ -4,803 +4,106 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
     <meta name="description" content="Kalkulator Keramik & Granit - Hitung kebutuhan material dengan akurat. BARIKO PUTERA Toko Keramik & Granit Berkualitas di Pemalang." />
-    <title>Kalkulator Keramik & Granit · BARIKO PUTERA</title>
+    <title>Kalkulator Keramik & Granit - Bariko Putera</title>
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; script-src 'unsafe-inline'; img-src data:;" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
     <style>
-        /* ===== BASE ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box
-        }
-        body {
-            background: #f7f7f7;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            color: #111111;
-            line-height: 1.4;
-            padding: 0 0 1.5rem;
-            -webkit-font-smoothing: antialiased;
-            font-size: 13px
-        }
-        .container {
-            max-width: 480px;
-            margin: 0 auto;
-            padding: 0 .7rem
-        }
-        .header {
-            background: rgba(17, 17, 17, .95);
-            backdrop-filter: blur(6px);
-            padding: .5rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 40;
-            border-bottom: 1px solid rgba(255, 255, 255, .06);
-            margin-bottom: .3rem
-        }
-        .header .container {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-        }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: .4rem;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            font-size: 1rem;
-            color: #ffffff;
-            text-decoration: none;
-            letter-spacing: .2px
-        }
-        .logo img {
-            height: 26px;
-            width: auto;
-            display: block
-        }
-        .logo span {
-            letter-spacing: -.3px
-        }
-        .hero-mini {
-            background: #111111;
-            color: #fff;
-            padding: 1.2rem 1rem 1.2rem;
-            border-radius: 16px;
-            margin: 0 .7rem 1rem;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, .12);
-            text-align: center
-        }
-        .hero-mini h1 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            font-size: 1.2rem;
-            letter-spacing: -.3px;
-            margin-bottom: .1rem
-        }
-        .hero-mini p {
-            font-size: .75rem;
-            opacity: .85;
-            font-weight: 400
-        }
-        .card-calc {
-            background: #fff;
-            border-radius: 14px;
-            padding: 1.2rem 1rem;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, .02), 0 1px 4px rgba(0, 0, 0, .04);
-            margin: 0 .7rem 1rem;
-            border: 1px solid rgba(0, 0, 0, .02)
-        }
-        .form-group {
-            margin-bottom: .9rem
-        }
-        .form-group label {
-            display: block;
-            font-weight: 500;
-            font-size: .75rem;
-            color: #333333;
-            margin-bottom: .25rem;
-            letter-spacing: -.2px
-        }
-        .form-group label i {
-            margin-right: .25rem;
-            opacity: .5;
-            font-size: .7rem
-        }
-        .form-control {
-            width: 100%;
-            padding: .6rem .7rem;
-            border: 1.5px solid #dedede;
-            border-radius: 12px;
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-            background: #fafafa;
-            transition: .2s;
-            color: #111111;
-            appearance: none
-        }
-        .form-control:focus {
-            border-color: #111111;
-            outline: 0;
-            background: #fff;
-            box-shadow: 0 0 0 3px rgba(0, 0, 0, .06)
-        }
-        .form-control::placeholder {
-            color: #a3a3a3;
-            font-weight: 400;
-            font-size: .85rem
-        }
-        .custom-dropdown {
-            position: relative
-        }
-        .dropdown-selected {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: .6rem .7rem;
-            border: 1.5px solid #dedede;
-            border-radius: 12px;
-            background: #fafafa;
-            cursor: pointer;
-            font-size: .85rem;
-            color: #111111;
-            transition: .2s;
-            font-weight: 450;
-            min-height: 42px
-        }
-        .dropdown-selected.placeholder {
-            color: #8c8c8c
-        }
-        .dropdown-selected.filled {
-            color: #111111
-        }
-        .dropdown-arrow {
-            font-size: .7rem;
-            opacity: .5;
-            transition: .25s
-        }
-        .dropdown-open .dropdown-arrow {
-            transform: rotate(180deg);
-            opacity: .8
-        }
-        .dropdown-options {
-            position: absolute;
-            top: calc(100% + 4px);
-            left: 0;
-            right: 0;
-            background: #fff;
-            border-radius: 14px;
-            border: 1px solid #ececec;
-            box-shadow: 0 10px 24px rgba(0, 0, 0, .08);
-            max-height: 180px;
-            overflow-y: auto;
-            display: none;
-            z-index: 30;
-            padding: .2rem 0
-        }
-        .dropdown-open .dropdown-options {
-            display: block
-        }
-        .dropdown-option {
-            padding: .5rem .8rem;
-            font-size: .8rem;
-            border-bottom: 1px solid #e8e8e8;
-            cursor: pointer;
-            transition: .1s;
-            display: flex;
-            justify-content: space-between;
-            align-items: center
-        }
-        .dropdown-option:last-child {
-            border-bottom: 0
-        }
-        .dropdown-option:hover {
-            background: #efefef
-        }
-        .dropdown-option.selected {
-            background: #ececec;
-            color: #111111;
-            font-weight: 500
-        }
-        .dropdown-option span {
-            color: #666666;
-            font-weight: 400;
-            font-size: .7rem
-        }
-        .btn-primary {
-            width: 100%;
-            padding: .75rem;
-            background: #111111;
-            color: #fff;
-            border: 0;
-            border-radius: 40px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            font-size: .85rem;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: .4rem;
-            cursor: pointer;
-            transition: .2s;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, .14);
-            margin-top: .3rem;
-            min-height: 44px
-        }
-        .btn-primary:active {
-            transform: scale(.97)
-        }
-        .btn-primary:disabled {
-            opacity: .6;
-            transform: none;
-            box-shadow: none
-        }
-        .alert-error {
-            background: #fee9e7;
-            border-left: 4px solid #c73b2b;
-            color: #8f2b1f;
-            display: none;
-            padding: .6rem .8rem;
-            border-radius: 12px;
-            font-size: .75rem;
-            margin: .6rem 0 0;
-            align-items: center;
-            gap: .4rem
-        }
-        .alert-error.show {
-            display: flex
-        }
-        .result-dashboard {
-            margin-top: 1.2rem;
-            background: #f7f7f7;
-            border-radius: 14px;
-            padding: 1rem .8rem;
-            border: 1px solid #ececec;
-            display: none
-        }
-        .result-dashboard.show {
-            display: block;
-            animation: fadeUp .35s ease
-        }
-        @keyframes fadeUp {
-            0% {
-                opacity: 0;
-                transform: translateY(10px)
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0)
-            }
-        }
-        .result-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: .8rem;
-            border-bottom: 1px solid #e5e5e5;
-            padding-bottom: .4rem
-        }
-        .result-header h3 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: .95rem;
-            color: #111111;
-            letter-spacing: -.3px
-        }
-        .badge-size {
-            background: #111111;
-            padding: .15rem .6rem;
-            border-radius: 40px;
-            font-size: .65rem;
-            font-weight: 600;
-            color: #ffffff
-        }
-        .metric-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: .5rem;
-            margin-bottom: .5rem
-        }
-        .metric-item {
-            background: #fff;
-            border-radius: 12px;
-            padding: .5rem .2rem;
-            text-align: center;
-            border: 1px solid #e8e8e8
-        }
-        .metric-label {
-            font-size: .55rem;
-            text-transform: uppercase;
-            letter-spacing: .3px;
-            color: #666666;
-            font-weight: 600
-        }
-        .metric-value {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #111111;
-            margin-top: .05rem;
-            line-height: 1.2
-        }
-        .metric-value small {
-            font-weight: 400;
-            font-size: .6rem;
-            color: #737373;
-            margin-left: 1px
-        }
-        .metric-buffer {
-            background: #111111;
-            border: 1px solid #111111
-        }
-        .metric-buffer .metric-label {
-            color: rgba(255, 255, 255, .65)
-        }
-        .metric-buffer .metric-value {
-            color: #ffffff
-        }
-        .metric-buffer .metric-value small {
-            color: rgba(255, 255, 255, .6)
-        }
-        .pieces-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: .7rem;
-            color: #4d4d4d;
-            background: #f0f0f0;
-            padding: .3rem .7rem;
-            border-radius: 40px;
-            margin-top: .2rem
-        }
-        .pieces-row strong {
-            color: #111111
-        }
-        .action-group {
-            display: flex;
-            flex-direction: column;
-            gap: .4rem;
-            margin-top: .8rem
-        }
-        .btn-wa {
-            background: #25b66b;
-            color: #fff;
-            border: 0;
-            border-radius: 40px;
-            padding: .6rem;
-            font-weight: 600;
-            font-size: .8rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: .4rem;
-            text-decoration: none;
-            transition: .2s;
-            box-shadow: 0 2px 8px rgba(37, 182, 107, .15);
-            min-height: 40px
-        }
-        .btn-wa:active {
-            transform: scale(.97)
-        }
-        .btn-print {
-            background: 0 0;
-            color: #333333;
-            border: 1px solid #cccccc;
-            border-radius: 40px;
-            padding: .5rem;
-            font-weight: 500;
-            font-size: .75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: .3rem;
-            cursor: pointer;
-            transition: .2s;
-            min-height: 38px
-        }
-        .btn-print:active {
-            background: #ececec
-        }
-        .alert-tip {
-            background: #f0f0f0;
-            border-radius: 12px;
-            padding: .5rem .7rem;
-            font-size: .65rem;
-            color: #262626;
-            margin: .6rem 0 .2rem;
-            display: flex;
-            align-items: center;
-            gap: .4rem;
-            border-left: 3px solid #111111
-        }
-        .alert-tip i {
-            color: #111111;
-            opacity: .7;
-            font-size: .7rem
-        }
-        .footer-mini {
-            text-align: center;
-            font-size: .6rem;
-            color: #8c8c8c;
-            padding: 1.5rem .7rem .5rem;
-            border-top: 1px solid #ececec;
-            margin: 1rem .7rem 0
-        }
-        .footer-mini a {
-            color: #111111;
-            text-decoration: underline;
-            text-underline-offset: 2px;
-            font-weight: 500
-        }
-        .mode-switcher {
-            display: flex;
-            background: #ececec;
-            border-radius: 12px;
-            padding: .25rem;
-            gap: .25rem;
-            margin-bottom: 1rem
-        }
-        .mode-tab {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: .35rem;
-            padding: .55rem .4rem;
-            border: 0;
-            background: 0 0;
-            border-radius: 9px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            font-size: .78rem;
-            color: #666666;
-            cursor: pointer;
-            transition: .2s
-        }
-        .mode-tab.active {
-            background: #fff;
-            color: #111111;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, .10)
-        }
-        .mode-tab i {
-            font-size: .75rem
-        }
-        .mode-panel {
-            display: none
-        }
-        .mode-panel.active {
-            display: block
-        }
-        .wall-dimension-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: .5rem
-        }
-        .wall-dimension-grid .full-width {
-            grid-column: 1/-1
-        }
-        .wall-dimension-grid .form-group {
-            margin-bottom: 0
-        }
-        .wall-info {
-            font-size: .65rem;
-            color: #666666;
-            margin: .2rem 0 .8rem;
-            padding-left: .2rem
-        }
-        /* ===== ROOM ROW ===== */
-        .room-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: .3rem;
-            align-items: center;
-            padding: .4rem .2rem;
-            border-bottom: 1px solid #e8e8e8;
-            background: #fafafa;
-            border-radius: 8px;
-            margin-bottom: .3rem
-        }
-        .room-row input,
-        .room-row select {
-            font-family: 'Inter', sans-serif;
-            font-size: .7rem;
-            background: #fff;
-            border: 1.5px solid #dedede;
-            border-radius: 8px;
-            padding: .3rem .4rem;
-            min-height: 32px;
-            transition: .15s;
-            color: #111111
-        }
-        .room-row input:focus,
-        .room-row select:focus {
-            border-color: #111111;
-            outline: 0;
-            box-shadow: 0 0 0 2px rgba(0, 0, 0, .08)
-        }
-        .room-row .room-name {
-            flex: 1 1 80px;
-            min-width: 60px
-        }
-        .room-row .room-length,
-        .room-row .room-width {
-            flex: 0 1 60px;
-            min-width: 50px
-        }
-        .room-row .room-area {
-            flex: 0 1 50px;
-            font-weight: 600;
-            font-size: .7rem;
-            text-align: center;
-            color: #111111;
-            min-width: 40px
-        }
-        .room-row .room-tile-select {
-            flex: 1 1 90px;
-            min-width: 80px
-        }
-        .room-row .room-dus {
-            flex: 0 1 40px;
-            font-weight: 700;
-            font-size: .75rem;
-            text-align: center;
-            color: #111111;
-            min-width: 30px
-        }
-        .room-row .room-delete {
-            flex: 0 0 24px;
-            background: 0 0;
-            border: 0;
-            color: #adadad;
-            cursor: pointer;
-            font-size: .7rem;
-            padding: 0;
-            transition: .15s;
-            min-height: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center
-        }
-        .room-row .room-delete:hover {
-            color: #c73b2b
-        }
-        .btn-add-room {
-            width: 100%;
-            padding: .5rem;
-            border: 1.5px dashed #b3b3b3;
-            border-radius: 12px;
-            background: 0 0;
-            color: #111111;
-            font-weight: 600;
-            font-size: .8rem;
-            cursor: pointer;
-            transition: .2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: .4rem;
-            margin-top: .2rem;
-            font-family: 'Inter', sans-serif
-        }
-        .btn-add-room:hover {
-            background: #efefef;
-            border-color: #111111
-        }
-        /* ===== MULTI SUMMARY (TABLE STYLE) ===== */
-        .summary-multi {
-            display: none;
-            margin-top: 1rem;
-            background: #f7f7f7;
-            border-radius: 14px;
-            padding: 1rem;
-            border: 1px solid #ececec
-        }
-        .summary-multi.show {
-            display: block;
-            animation: fadeUp .35s ease
-        }
-        .summary-multi .table-wrap {
-            overflow-x: auto;
-            margin: .5rem 0 .3rem;
-            border-radius: 10px;
-            border: 1px solid #dcdcdc
-        }
-        .summary-multi table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: .7rem;
-            min-width: 480px;
-            font-family: 'Inter', sans-serif
-        }
-        .summary-multi table th {
-            background: #111111;
-            color: #fff;
-            font-weight: 600;
-            padding: .5rem .4rem;
-            text-align: left;
-            white-space: nowrap;
-            font-size: .65rem;
-            letter-spacing: .2px;
-            border: 1px solid #111111
-        }
-        .summary-multi table td {
-            padding: .4rem .4rem;
-            border: 1px solid #dcdcdc;
-            vertical-align: middle;
-            background: #fff
-        }
-        .summary-multi table tr:nth-child(even) td {
-            background: #f7f7f7
-        }
-        .summary-multi table .num {
-            text-align: right;
-            font-feature-settings: "tnum"
-        }
-        .summary-multi table .total-row td {
-            background: #ececec !important;
-            font-weight: 700;
-            border-top: 2px solid #111111;
-            font-size: .7rem
-        }
-        .summary-multi table .total-row td:first-child {
-            text-align: center
-        }
-        .summary-multi .table-caption {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: .7rem;
-            color: #4d4d4d;
-            padding: .2rem 0 .4rem;
-            flex-wrap: wrap;
-            gap: .3rem
-        }
-        .summary-multi .table-caption .badge-total {
-            background: #111111;
-            color: #fff;
-            padding: .15rem .7rem;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: .65rem
-        }
-        .summary-multi .empty-state {
-            color: #666666;
-            font-size: .8rem;
-            text-align: center;
-            padding: .5rem
-        }
-        .summary-multi .action-group-multi {
-            display: flex;
-            flex-direction: column;
-            gap: .4rem;
-            margin-top: .6rem
-        }
-        @media(max-width:420px) {
-            body {
-                font-size: 12px
-            }
-            .hero-mini {
-                padding: 1rem .8rem
-            }
-            .hero-mini h1 {
-                font-size: 1.05rem
-            }
-            .card-calc {
-                padding: 1rem .8rem
-            }
-            .metric-grid {
-                gap: .35rem
-            }
-            .metric-item {
-                padding: .4rem .15rem
-            }
-            .metric-value {
-                font-size: .85rem
-            }
-            .form-control {
-                font-size: 14px;
-                padding: .5rem .6rem
-            }
-            .dropdown-selected {
-                padding: .5rem .6rem;
-                font-size: .8rem;
-                min-height: 38px
-            }
-            .mode-tab {
-                font-size: .72rem;
-                padding: .5rem .3rem
-            }
-            .wall-dimension-grid {
-                gap: .3rem
-            }
-            .room-row input,
-            .room-row select {
-                font-size: .65rem;
-                padding: .25rem .3rem;
-                min-height: 28px
-            }
-            .room-row .room-name {
-                flex: 1 1 70px;
-                min-width: 50px
-            }
-            .room-row .room-length,
-            .room-row .room-width {
-                flex: 0 1 50px;
-                min-width: 40px
-            }
-            .room-row .room-area {
-                flex: 0 1 40px;
-                font-size: .65rem;
-                min-width: 30px
-            }
-            .room-row .room-tile-select {
-                flex: 1 1 70px;
-                min-width: 60px
-            }
-            .room-row .room-dus {
-                flex: 0 1 32px;
-                font-size: .65rem;
-                min-width: 24px
-            }
-            .room-row .room-delete {
-                flex: 0 0 20px;
-                font-size: .6rem
-            }
-            .summary-multi table {
-                font-size: .6rem;
-                min-width: 360px
-            }
-            .summary-multi table th,
-            .summary-multi table td {
-                padding: .3rem .25rem
-            }
-        }
-        @media(max-width:360px) {
-            .metric-grid {
-                grid-template-columns: 1fr 1fr
-            }
-            .metric-item:last-child {
-                grid-column: span 2
-            }
-            .hero-mini h1 {
-                font-size: .95rem
-            }
-            .hero-mini p {
-                font-size: .65rem
-            }
-            .btn-primary {
-                font-size: .75rem;
-                padding: .6rem;
-                min-height: 38px
-            }
-            .btn-wa {
-                font-size: .7rem;
-                padding: .5rem;
-                min-height: 36px
-            }
-            .btn-print {
-                font-size: .65rem;
-                padding: .4rem;
-                min-height: 34px
-            }
-            .wall-dimension-grid {
-                gap: .2rem
-            }
-            .summary-multi table {
-                min-width: 300px;
-                font-size: .55rem
-            }
-        }
-        input[type=number]::-webkit-inner-spin-button,
-        input[type=number]::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0
-        }
-        input[type=number] {
-            -moz-appearance: textfield
-        }
-    </style>
+:root{--ink:#111315;--ink2:#2A2E33;--mut:#5C636A;--line:#DADDE0;--line2:#B7BDC3;--bg:#F0F1F2;--brass:#C9A66B;--ok:#1C8A4C;--bad:#B3261E}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);font:15px/1.5 'IBM Plex Sans',system-ui,-apple-system,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:24px}
+h1,h3,.logo,.btn-primary,.mode-tab,.btn-add-room,.btn-wa,.btn-print,.footer-mini strong{font-family:'Plus Jakarta Sans','IBM Plex Sans',sans-serif}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.container{max-width:520px;margin:0 auto;padding:0 20px}
+.header{background:var(--ink);position:sticky;top:0;z-index:40;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:700;font-size:14px;letter-spacing:.06em}
+.logo img{height:28px;width:auto;display:block}
+.hero-mini{background:var(--ink);color:#fff;padding:30px 0 72px;position:relative;overflow:hidden}
+.hero-mini::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.09) 1px,transparent 1px);background-size:56px 56px;background-position:right 10px top 0;-webkit-mask-image:linear-gradient(100deg,transparent 20%,#000 90%);mask-image:linear-gradient(100deg,transparent 20%,#000 90%)}
+.hero-mini .container{position:relative}
+.hero-mini h1{font-weight:800;font-size:27px;line-height:1.15;letter-spacing:-.02em}
+.hero-mini p{margin-top:8px;font-size:14px;color:rgba(255,255,255,.72)}
+.card-calc{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 18px 22px;width:calc(100% - 32px);max-width:488px;margin:-44px auto 20px;position:relative;box-shadow:0 10px 28px rgba(17,19,21,.08)}
+.mode-switcher{display:flex;border-bottom:1px solid var(--line);margin-bottom:20px}
+.mode-tab{flex:1;padding:10px 4px 12px;border:0;background:none;font-weight:600;font-size:14px;color:var(--mut);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s}
+.mode-tab.active{color:var(--ink);border-bottom-color:var(--ink)}
+.mode-panel{display:none}.mode-panel.active{display:block}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-weight:600;font-size:13px;color:var(--ink2);margin-bottom:6px}
+.form-control,.dropdown-selected{width:100%;min-height:48px;padding:0 14px;border:1px solid var(--line2);border-radius:10px;background:#fff;font:16px 'IBM Plex Sans',sans-serif;color:var(--ink);transition:border-color .15s,box-shadow .15s;appearance:none}
+.form-control:focus,.dropdown-open .dropdown-selected{border-color:var(--ink);outline:0;box-shadow:0 0 0 3px rgba(17,19,21,.12)}
+.form-control::placeholder,.dropdown-selected.placeholder{color:#8A9197}
+.custom-dropdown{position:relative}
+.dropdown-selected{display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.dropdown-arrow{width:8px;height:8px;border-right:2px solid var(--mut);border-bottom:2px solid var(--mut);transform:rotate(45deg) translate(-2px,-2px);transition:transform .2s}
+.dropdown-open .dropdown-arrow{transform:rotate(-135deg) translate(-2px,-2px)}
+.dropdown-options{position:absolute;top:calc(100% + 6px);left:0;right:0;background:#fff;border:1px solid var(--line2);border-radius:10px;box-shadow:0 12px 28px rgba(17,19,21,.14);max-height:250px;overflow-y:auto;display:none;z-index:30}
+.dropdown-open .dropdown-options{display:block}
+.dropdown-option{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line);cursor:pointer;font-weight:500}
+.dropdown-option:last-child{border-bottom:0}
+.dropdown-option:hover{background:#F4F5F6}
+.dropdown-option.selected{box-shadow:inset 3px 0 0 var(--ink);font-weight:600}
+.dropdown-option span{color:var(--mut);font-weight:400;font-size:13px}
+.btn-primary{width:100%;min-height:50px;margin-top:4px;background:var(--ink);color:#fff;border:0;border-radius:10px;font-weight:700;font-size:15px;cursor:pointer;transition:background .15s}
+.btn-primary:hover{background:var(--ink2)}.btn-primary:active{transform:translateY(1px)}
+.alert-error{display:none;margin-top:12px;padding:11px 14px;background:#FCEFED;border:1px solid #EBC3BE;border-radius:10px;color:#8E1F17;font-size:14px}
+.alert-error.show{display:block}
+.result-dashboard,.summary-multi{display:none;margin-top:24px;border-top:1px solid var(--line);padding-top:18px}
+.result-dashboard.show,.summary-multi.show{display:block;animation:rise .3s ease}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.result-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.result-header h3{font-weight:700;font-size:17px;letter-spacing:-.01em}
+.badge-size{padding:3px 10px;border:1px solid var(--ink);border-radius:6px;font-weight:600;font-size:13px}
+.metric-item{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:12px 2px;border-bottom:1px solid var(--line)}
+.metric-item:last-child{border-bottom:0}
+.metric-label{color:var(--mut);font-size:14px}
+.metric-value{font-weight:600;font-variant-numeric:tabular-nums}
+.metric-value small{font-weight:400;font-size:13px;color:var(--mut)}
+.pcs::after{content:" pcs";color:var(--mut);font-weight:400;font-size:13px}
+.metric-item.metric-buffer{display:block;background:var(--ink);border:0;border-radius:10px;padding:16px 18px;margin-bottom:4px}
+.metric-buffer .metric-label{color:var(--brass);font-weight:600}
+.metric-buffer .metric-value{font:800 40px/1.1 'Plus Jakarta Sans',sans-serif;letter-spacing:-.02em;color:#fff;margin-top:4px}
+.metric-buffer .metric-value small{font-size:16px;font-weight:600;color:rgba(255,255,255,.7)}
+.action-group,.action-group-multi{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.btn-wa,.btn-print{display:flex;align-items:center;justify-content:center;width:100%;min-height:48px;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none;cursor:pointer}
+.btn-wa{background:var(--ok);color:#fff;border:0}.btn-wa:hover{filter:brightness(.94)}
+.btn-print{background:#fff;color:var(--ink);border:1px solid var(--line2)}.btn-print:hover{background:#F4F5F6}
+.alert-tip{margin-top:14px;font-size:13px;color:var(--mut)}
+.wall-dimension-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.wall-dimension-grid .full-width{grid-column:1/-1}
+.wall-info{font-size:13px;color:var(--mut);margin:-4px 0 16px}
+.multi-intro{font-size:14px;color:var(--mut);margin-bottom:14px}
+.room-row{display:grid;grid-template-columns:1fr 1fr 88px;grid-template-areas:"n n d" "l w a" "t t t" "u u u";gap:8px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:10px;background:#FAFAFB;margin-bottom:10px}
+.room-row input,.room-row select{width:100%;min-width:0;min-height:44px;padding:0 12px;border:1px solid var(--line2);border-radius:8px;background:#fff;font:16px 'IBM Plex Sans',sans-serif;color:var(--ink)}
+.room-row input:focus,.room-row select:focus{border-color:var(--ink);outline:0;box-shadow:0 0 0 3px rgba(17,19,21,.12)}
+.room-name{grid-area:n}.room-length{grid-area:l}.room-width{grid-area:w}.room-tile-select{grid-area:t}
+.room-area{grid-area:a;text-align:right;font-weight:600;font-size:14px;font-variant-numeric:tabular-nums}
+.room-dus{grid-area:u;text-align:right;font-weight:700;font-size:18px;padding-top:6px;border-top:1px solid var(--line)}
+.room-dus::before{content:"Kebutuhan";float:left;font-weight:400;font-size:14px;color:var(--mut);line-height:27px}
+.room-dus::after{content:" dus";font-weight:400;font-size:13px;color:var(--mut)}
+.room-row .room-delete{grid-area:d;justify-self:end;width:40px;min-height:40px;padding:0;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--mut);font-size:22px;line-height:1;cursor:pointer}
+.room-row .room-delete:hover{color:var(--bad);border-color:var(--bad)}
+.btn-add-room{width:100%;min-height:46px;border:1px dashed var(--line2);border-radius:10px;background:none;color:var(--ink);font-weight:600;font-size:14px;cursor:pointer;margin-bottom:10px}
+.btn-add-room:hover{border-color:var(--ink);background:#F4F5F6}
+.summary-multi .table-caption{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.summary-multi .table-caption strong{font:700 17px 'Plus Jakarta Sans',sans-serif}
+.badge-total{background:var(--ink);color:#fff;padding:4px 12px;border-radius:6px;font-weight:600;font-size:13px}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+.summary-multi table{width:100%;min-width:460px;border-collapse:collapse;font-size:14px}
+.summary-multi th{padding:10px;text-align:left;font-weight:600;font-size:13px;color:var(--mut);background:#FAFAFB;border-bottom:1px solid var(--ink);white-space:nowrap}
+.summary-multi td{padding:10px;border-bottom:1px solid var(--line)}
+.summary-multi .num{text-align:right;font-variant-numeric:tabular-nums}
+.summary-multi .total-row td{background:#F4F5F6;font-weight:700;border-bottom:0;border-top:1px solid var(--ink)}
+.empty-state{color:var(--mut);font-size:14px;text-align:center;padding:6px}
+.footer-mini{max-width:488px;margin:0 auto;padding:8px 16px 0;text-align:center;font-size:13px;color:var(--mut)}
+.footer-mini strong{display:block;color:var(--ink);font-size:14px;letter-spacing:.06em}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+input[type=number]{-moz-appearance:textfield}
+@media(max-width:360px){.hero-mini h1{font-size:23px}.metric-buffer .metric-value{font-size:34px}.card-calc{padding:16px 14px 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+</style>
 </head>
 <body>
 
@@ -810,28 +113,25 @@
         </div>
     </header>
 
-    <div class="hero-mini">
-        <h1>Kalkulator Keramik &amp; Granit</h1>
-        <p>Hitung kebutuhan material dengan cepat</p>
-    </div>
+    <div class="hero-mini"><div class="container"><h1>Kalkulator Keramik &amp; Granit</h1><p>Hitung kebutuhan material dengan cepat</p></div></div>
 
     <div class="card-calc">
         <!-- MODE TABS -->
         <div class="mode-switcher">
-            <button type="button" class="mode-tab active" data-mode="floor"><i class="fas fa-vector-square"></i> Lantai</button>
-            <button type="button" class="mode-tab" data-mode="wall"><i class="fas fa-align-justify"></i> Dinding</button>
-            <button type="button" class="mode-tab" data-mode="multi"><i class="fas fa-house"></i> Rumah</button>
+            <button type="button" class="mode-tab active" data-mode="floor">Lantai</button>
+            <button type="button" class="mode-tab" data-mode="wall">Dinding</button>
+            <button type="button" class="mode-tab" data-mode="multi">Rumah</button>
         </div>
 
         <!-- ===== LANTAI ===== -->
         <div id="floorMode" class="mode-panel active">
             <form id="calcForm">
-                <div class="form-group"><label for="roomLength"><i class="fas fa-arrows-left-right"></i> Panjang (m)</label><input type="number" id="roomLength" class="form-control" step="0.01" min="0.1" placeholder="contoh: 4.5" required /></div>
-                <div class="form-group"><label for="roomWidth"><i class="fas fa-arrows-up-down"></i> Lebar (m)</label><input type="number" id="roomWidth" class="form-control" step="0.01" min="0.1" placeholder="contoh: 3.2" required /></div>
+                <div class="form-group"><label for="roomLength">Panjang (m)</label><input type="number" id="roomLength" class="form-control" step="0.01" min="0.1" placeholder="contoh: 4.5" required /></div>
+                <div class="form-group"><label for="roomWidth">Lebar (m)</label><input type="number" id="roomWidth" class="form-control" step="0.01" min="0.1" placeholder="contoh: 3.2" required /></div>
                 <div class="form-group">
-                    <label><i class="fas fa-border-all"></i> Ukuran keramik</label>
+                    <label>Ukuran keramik</label>
                     <div class="custom-dropdown" id="tileDropdown">
-                        <div class="dropdown-selected placeholder" id="dropdownSelected"><span>Pilih ukuran</span><i class="fas fa-chevron-down dropdown-arrow"></i></div>
+                        <div class="dropdown-selected placeholder" id="dropdownSelected"><span>Pilih ukuran</span><span class="dropdown-arrow" aria-hidden="true"></span></div>
                         <div class="dropdown-options" id="dropdownOptions">
                             <div class="dropdown-option" data-size="25x25" data-area="1.00" data-pieces="16">25×25 cm <span>1.00 m²/dus</span></div>
                             <div class="dropdown-option" data-size="25x40" data-area="1.00" data-pieces="10">25×40 cm <span>1.00 m²/dus</span></div>
@@ -847,19 +147,20 @@
                     <input type="hidden" id="selectedTileArea" />
                     <input type="hidden" id="selectedTilePieces" />
                 </div>
-                <button type="submit" class="btn-primary" id="calculateBtn"><i class="fas fa-calculator"></i> Hitung</button>
-                <div class="alert-error" id="errorAlert"><i class="fas fa-exclamation-circle"></i> Lengkapi semua input dengan benar.</div>
+                <button type="submit" class="btn-primary" id="calculateBtn">Hitung</button>
+                <div class="alert-error" id="errorAlert">Lengkapi semua input dengan benar.</div>
             </form>
             <div class="result-dashboard" id="resultDashboard">
                 <div class="result-header"><h3>Ringkasan</h3><span class="badge-size" id="selectedSizeLabel">—</span></div>
                 <div class="metric-grid">
-                    <div class="metric-item"><div class="metric-label">Luas</div><div class="metric-value" id="totalArea">0 <small>m²</small></div></div>
-                    <div class="metric-item"><div class="metric-label">Dus</div><div class="metric-value" id="totalBoxes">0 <small>dus</small></div></div>
-                    <div class="metric-item metric-buffer"><div class="metric-label">+10%</div><div class="metric-value" id="totalWithBuffer">0 <small>dus</small></div></div>
+                    <div class="metric-item metric-buffer"><div class="metric-label">Disarankan dipesan (+10%)</div><div class="metric-value" id="totalWithBuffer">0 <small>dus</small></div></div>
+                    <div class="metric-item"><span class="metric-label">Luas</span><span class="metric-value" id="totalArea">0 <small>m²</small></span></div>
+                    <div class="metric-item"><span class="metric-label">Kebutuhan tanpa cadangan</span><span class="metric-value" id="totalBoxes">0 <small>dus</small></span></div>
+                    <div class="metric-item"><span class="metric-label">Total keping</span><strong class="metric-value pcs" id="totalPieces">0</strong></div>
+                    <div class="metric-item"><span class="metric-label">Keping +10%</span><strong class="metric-value pcs" id="totalPiecesWithBuffer">0</strong></div>
                 </div>
-                <div class="pieces-row"><span><i class="far fa-square"></i> Keping: <strong id="totalPieces">0</strong></span><span><i class="fas fa-plus-circle" style="opacity:0.4;"></i> +10%: <strong id="totalPiecesWithBuffer">0</strong></span></div>
-                <div class="action-group"><a id="whatsappLink" class="btn-wa" target="_blank" href="#"><i class="fab fa-whatsapp"></i> Konsultasi WA</a><button id="printBtn" class="btn-print" onclick="printResult('floor')"><i class="fas fa-print"></i> Cetak</button></div>
-                <div class="alert-tip"><i class="fas fa-info-circle"></i> Hasil estimasi. Konsultasi dengan tim ahli disarankan.</div>
+                <div class="action-group"><a id="whatsappLink" class="btn-wa" target="_blank" href="#">Konsultasi WA</a><button id="printBtn" class="btn-print" onclick="printResult('floor')">Cetak</button></div>
+                <div class="alert-tip">Hasil estimasi. Konsultasi dengan tim ahli disarankan.</div>
             </div>
         </div>
 
@@ -867,15 +168,15 @@
         <div id="wallMode" class="mode-panel">
             <form id="wallCalcForm">
                 <div class="wall-dimension-grid">
-                    <div class="form-group full-width"><label for="wallHeight"><i class="fas fa-arrows-up-down"></i> Tinggi (m)</label><input type="number" id="wallHeight" class="form-control" step="0.01" min="0.1" placeholder="misal 3" required /></div>
-                    <div class="form-group"><label for="wallLength"><i class="fas fa-arrows-left-right"></i> Panjang (m)</label><input type="number" id="wallLength" class="form-control" step="0.01" min="0.1" placeholder="misal 4" required /></div>
-                    <div class="form-group"><label for="wallWidth"><i class="fas fa-arrows-up-down"></i> Lebar (m)</label><input type="number" id="wallWidth" class="form-control" step="0.01" min="0.1" placeholder="misal 3" required /></div>
+                    <div class="form-group full-width"><label for="wallHeight">Tinggi (m)</label><input type="number" id="wallHeight" class="form-control" step="0.01" min="0.1" placeholder="misal 3" required /></div>
+                    <div class="form-group"><label for="wallLength">Panjang (m)</label><input type="number" id="wallLength" class="form-control" step="0.01" min="0.1" placeholder="misal 4" required /></div>
+                    <div class="form-group"><label for="wallWidth">Lebar (m)</label><input type="number" id="wallWidth" class="form-control" step="0.01" min="0.1" placeholder="misal 3" required /></div>
                 </div>
-                <div class="wall-info"><i class="fas fa-info-circle"></i> Luas dinding = 2 × (panjang + lebar) × tinggi</div>
+                <div class="wall-info">Luas dinding = 2 × (panjang + lebar) × tinggi</div>
                 <div class="form-group">
-                    <label><i class="fas fa-border-all"></i> Ukuran keramik</label>
+                    <label>Ukuran keramik</label>
                     <div class="custom-dropdown" id="tileDropdownWall">
-                        <div class="dropdown-selected placeholder" id="dropdownSelectedWall"><span>Pilih ukuran</span><i class="fas fa-chevron-down dropdown-arrow"></i></div>
+                        <div class="dropdown-selected placeholder" id="dropdownSelectedWall"><span>Pilih ukuran</span><span class="dropdown-arrow" aria-hidden="true"></span></div>
                         <div class="dropdown-options">
                             <div class="dropdown-option" data-size="25x25" data-area="1.00" data-pieces="16">25×25 cm <span>1.00 m²/dus</span></div>
                             <div class="dropdown-option" data-size="25x40" data-area="1.00" data-pieces="10">25×40 cm <span>1.00 m²/dus</span></div>
@@ -891,38 +192,36 @@
                     <input type="hidden" id="selectedTileAreaWall" />
                     <input type="hidden" id="selectedTilePiecesWall" />
                 </div>
-                <button type="submit" class="btn-primary" id="calculateBtnWall"><i class="fas fa-calculator"></i> Hitung</button>
-                <div class="alert-error" id="errorAlertWall"><i class="fas fa-exclamation-circle"></i> Lengkapi semua input dengan benar.</div>
+                <button type="submit" class="btn-primary" id="calculateBtnWall">Hitung</button>
+                <div class="alert-error" id="errorAlertWall">Lengkapi semua input dengan benar.</div>
             </form>
             <div class="result-dashboard" id="resultDashboardWall">
                 <div class="result-header"><h3>Ringkasan</h3><span class="badge-size" id="selectedSizeLabelWall">—</span></div>
                 <div class="metric-grid">
-                    <div class="metric-item"><div class="metric-label">Luas</div><div class="metric-value" id="totalAreaWall">0 <small>m²</small></div></div>
-                    <div class="metric-item"><div class="metric-label">Dus</div><div class="metric-value" id="totalBoxesWall">0 <small>dus</small></div></div>
-                    <div class="metric-item metric-buffer"><div class="metric-label">+10%</div><div class="metric-value" id="totalWithBufferWall">0 <small>dus</small></div></div>
+                    <div class="metric-item metric-buffer"><div class="metric-label">Disarankan dipesan (+10%)</div><div class="metric-value" id="totalWithBufferWall">0 <small>dus</small></div></div>
+                    <div class="metric-item"><span class="metric-label">Luas</span><span class="metric-value" id="totalAreaWall">0 <small>m²</small></span></div>
+                    <div class="metric-item"><span class="metric-label">Kebutuhan tanpa cadangan</span><span class="metric-value" id="totalBoxesWall">0 <small>dus</small></span></div>
+                    <div class="metric-item"><span class="metric-label">Total keping</span><strong class="metric-value pcs" id="totalPiecesWall">0</strong></div>
+                    <div class="metric-item"><span class="metric-label">Keping +10%</span><strong class="metric-value pcs" id="totalPiecesWithBufferWall">0</strong></div>
                 </div>
-                <div class="pieces-row"><span><i class="far fa-square"></i> Keping: <strong id="totalPiecesWall">0</strong></span><span><i class="fas fa-plus-circle" style="opacity:0.4;"></i> +10%: <strong id="totalPiecesWithBufferWall">0</strong></span></div>
-                <div class="action-group"><a id="whatsappLinkWall" class="btn-wa" target="_blank" href="#"><i class="fab fa-whatsapp"></i> Konsultasi WA</a><button type="button" class="btn-print" onclick="printResult('wall')"><i class="fas fa-print"></i> Cetak</button></div>
-                <div class="alert-tip"><i class="fas fa-info-circle"></i> Hasil estimasi. Konsultasi dengan tim ahli disarankan.</div>
+                <div class="action-group"><a id="whatsappLinkWall" class="btn-wa" target="_blank" href="#">Konsultasi WA</a><button type="button" class="btn-print" onclick="printResult('wall')">Cetak</button></div>
+                <div class="alert-tip">Hasil estimasi. Konsultasi dengan tim ahli disarankan.</div>
             </div>
         </div>
 
         <!-- ===== RUMAH (MULTI ROOM) ===== -->
         <div id="multiMode" class="mode-panel">
-            <div style="font-size:.75rem;color:#4d4d4d;margin-bottom:.6rem;">
-                <i class="fas fa-info-circle"></i> Tambahkan ruangan satu per satu. Isi panjang &amp; lebar, pilih ukuran keramik.
+            <div class="multi-intro">
+                Tambahkan ruangan satu per satu. Isi panjang &amp; lebar, pilih ukuran keramik.
             </div>
             <div id="roomContainer"></div>
-            <button id="addRoomBtn" class="btn-add-room"><i class="fas fa-plus-circle"></i> Tambah Ruangan</button>
-            <button id="finishBtn" class="btn-primary" style="margin-top:.5rem;"><i class="fas fa-check-circle"></i> Selesai</button>
+            <button id="addRoomBtn" class="btn-add-room">Tambah ruangan</button>
+            <button id="finishBtn" class="btn-primary">Selesai</button>
             <div id="summaryMulti" class="summary-multi"></div>
         </div>
     </div>
 
-    <div class="footer-mini">
-        <p>BARIKO PUTERA · Toko Keramik &amp; Granit · Pemalang</p>
-        <p style="margin-top:.2rem;opacity:.6;">&copy; 2025 · <a href="#">Kalkulator interaktif</a></p>
-    </div>
+    <div class="footer-mini"><strong>BARIKO PUTERA</strong><p>Toko keramik &amp; granit, Pemalang</p><p>&copy; 2026 Kalkulator interaktif</p></div>
 
     <script>
         // ============================================================
@@ -950,6 +249,7 @@
         ];
 
         function _0x2b3c(a) { return _0x1a2b[a] || ''; }
+        var PRINT_CSS = 'body{font-family:"IBM Plex Sans","Segoe UI",Arial,sans-serif;color:#111315;font-size:13px;max-width:720px;margin:0 auto;padding:32px}h2{font-size:22px;margin:0 0 4px;letter-spacing:-.01em}.brand{font-weight:700;letter-spacing:.06em;font-size:12px;border-bottom:2px solid #111315;padding-bottom:10px;margin-bottom:18px}.sub{color:#5c636a;margin-bottom:16px}table{width:100%;border-collapse:collapse;margin:8px 0}th{text-align:left;font-size:12px;color:#5c636a;border-bottom:1.5px solid #111315;padding:8px}td{padding:8px;border-bottom:1px solid #dadde0}td:last-child{font-weight:600}.badge-print{display:inline-block;font-weight:700;font-size:14px;margin-top:8px}.note{margin-top:14px;font-size:12px;color:#5c636a}.footer{margin-top:28px;border-top:1px solid #dadde0;padding-top:10px;font-size:11px;color:#7a8087}';
 
         // ============================================================
         // MODE SWITCHER
@@ -1042,12 +342,12 @@
             var length = parseFloat(rL.value),
                 width = parseFloat(rW.value);
             if (!length || length <= 0) { valid = false;
-                rL.style.borderColor = '#c73b2b'; } else { rL.style.borderColor = ''; }
+                rL.style.borderColor = '#B3261E'; } else { rL.style.borderColor = ''; }
             if (!width || width <= 0) { valid = false;
-                rW.style.borderColor = '#c73b2b'; } else { rW.style.borderColor = ''; }
+                rW.style.borderColor = '#B3261E'; } else { rW.style.borderColor = ''; }
             var size = sTS.value;
             if (!size) { valid = false;
-                dS.style.borderColor = '#c73b2b'; } else { dS.style.borderColor = ''; }
+                dS.style.borderColor = '#B3261E'; } else { dS.style.borderColor = ''; }
             if (!valid) { eA.classList.add('show');
                 eA.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
             var area = parseFloat(sTA.value),
@@ -1110,14 +410,14 @@
                 length = parseFloat(wL.value),
                 width = parseFloat(wW.value);
             if (!height || height <= 0) { valid = false;
-                wH.style.borderColor = '#c73b2b'; } else { wH.style.borderColor = ''; }
+                wH.style.borderColor = '#B3261E'; } else { wH.style.borderColor = ''; }
             if (!length || length <= 0) { valid = false;
-                wL.style.borderColor = '#c73b2b'; } else { wL.style.borderColor = ''; }
+                wL.style.borderColor = '#B3261E'; } else { wL.style.borderColor = ''; }
             if (!width || width <= 0) { valid = false;
-                wW.style.borderColor = '#c73b2b'; } else { wW.style.borderColor = ''; }
+                wW.style.borderColor = '#B3261E'; } else { wW.style.borderColor = ''; }
             var size = sTSW.value;
             if (!size) { valid = false;
-                dSW.style.borderColor = '#c73b2b'; } else { dSW.style.borderColor = ''; }
+                dSW.style.borderColor = '#B3261E'; } else { dSW.style.borderColor = ''; }
             if (!valid) { eAW.classList.add('show');
                 eAW.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
             var wallArea = 2 * (length + width) * height,
@@ -1179,21 +479,9 @@
                 dims = 'Panjang: ' + p2.toFixed(2) + ' m, Lebar: ' + l2.toFixed(2) + ' m';
             }
             var win = window.open('', '_blank');
-            win.document.write(
-                '<html><head><title>Hasil Kalkulator Keramik</title><style>body{font-family:Inter,sans-serif;padding:1.5rem;max-width:400px;margin:auto;color:#111111;font-size:13px;}h2{font-family:Poppins,sans-serif;font-weight:600;color:#111111;font-size:1.2rem;}.dims{background:#f0f0f0;padding:0.4rem 0.7rem;border-radius:30px;font-size:0.7rem;margin-bottom:0.5rem;text-align:center;}.grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin:1rem 0;}.item{border:1px solid #d6d6d6;border-radius:12px;padding:0.6rem;text-align:center;}.label{font-size:0.6rem;text-transform:uppercase;color:#595959;}.value{font-size:1.1rem;font-weight:700;margin-top:0.1rem;}.footer{margin-top:1.5rem;font-size:0.6rem;color:#7a7a7a;border-top:1px solid #e5e5e5;padding-top:0.8rem;text-align:center;}</style></head><body><h2>📐 Estimasi Kebutuhan ' +
-                (mode === 'wall' ? '(Dinding)' : '(Lantai)') +
-                '</h2><div style="margin-bottom:0.2rem;color:#404040;font-size:0.8rem;">BARIKO PUTERA</div><div class="dims">' +
-                dims +
-                '</div><div class="grid"><div class="item"><div class="label">Luas</div><div class="value">' + aT +
-                '</div></div><div class="item"><div class="label">Ukuran</div><div class="value">' + sT +
-                '</div></div><div class="item"><div class="label">Dus</div><div class="value">' + dT +
-                '</div></div><div class="item"><div class="label">Dus +10%</div><div class="value">' + dB +
-                '</div></div><div class="item"><div class="label">Keping</div><div class="value">' + pT +
-                ' pcs</div></div><div class="item"><div class="label">Keping +10%</div><div class="value">' + pB +
-                ' pcs</div></div></div><div style="background:#f0f0f0;padding:0.5rem;border-radius:40px;font-size:0.7rem;text-align:center;">Hasil estimasi · konsultasi dengan tim ahli</div><div class="footer">Dicetak dari Kalkulator BARIKO PUTERA · ' +
-                new Date().toLocaleDateString('id-ID') +
-                '</div></body></html>'
-            );
+            var rows = [['Luas', aT], ['Ukuran keramik', sT], ['Kebutuhan dus', dT], ['Dus +10%', dB], ['Total keping', pT + ' pcs'], ['Keping +10%', pB + ' pcs']];
+            var trs = rows.map(function(r) { return '<tr><td>' + r[0] + '</td><td style="text-align:right">' + r[1] + '</td></tr>'; }).join('');
+            win.document.write('<html><head><title>Estimasi Kebutuhan Keramik</title><style>' + PRINT_CSS + '</style></head><body><div class="brand">BARIKO PUTERA</div><h2>Estimasi kebutuhan keramik, ' + (mode === 'wall' ? 'dinding' : 'lantai') + '</h2><div class="sub">' + dims + '</div><table><tbody>' + trs + '</tbody></table><div class="note">Hasil estimasi. Konsultasi dengan tim ahli disarankan.</div><div class="footer">Dicetak dari Kalkulator BARIKO PUTERA, ' + new Date().toLocaleDateString('id-ID') + '</div></body></html>');
             win.document.close();
             win.print();
         };
@@ -1235,7 +523,7 @@
             length.className = 'room-length';
             length.step = '0.01';
             length.min = '0.1';
-            length.placeholder = 'P';
+            length.placeholder = 'Panjang';
             row.appendChild(length);
 
             var width = document.createElement('input');
@@ -1243,7 +531,7 @@
             width.className = 'room-width';
             width.step = '0.01';
             width.min = '0.1';
-            width.placeholder = 'L';
+            width.placeholder = 'Lebar';
             row.appendChild(width);
 
             var area = document.createElement('span');
@@ -1274,7 +562,7 @@
             var del = document.createElement('button');
             del.className = 'room-delete';
             del.type = 'button';
-            del.innerHTML = '<i class="fas fa-times"></i>';
+            del.innerHTML = '&times;'; del.setAttribute('aria-label','Hapus ruangan');
             del.addEventListener('click', function() {
                 if (roomContainer.children.length > 1) {
                     row.remove();
@@ -1382,27 +670,27 @@
             var hasData = data.some(function(r) { return r.area > 0; });
             if (data.length === 0 || !hasData) {
                 summaryMulti.innerHTML =
-                    '<div class="empty-state"><i class="fas fa-info-circle"></i> Silakan isi panjang &amp; lebar ruangan terlebih dahulu.</div>';
+                    '<div class="empty-state">Silakan isi panjang &amp; lebar ruangan terlebih dahulu.</div>';
                 summaryMulti.classList.add('show');
                 return;
             }
 
             var html = '';
             html += '<div class="table-caption">';
-            html += '<span><i class="fas fa-table"></i> <strong>Rincian Ruangan</strong></span>';
+            html += '<span><strong>Rincian ruangan</strong></span>';
             html += '<span class="badge-total">Total ' + totalDus + ' dus</span>';
             html += '</div>';
 
             html += '<div class="table-wrap">';
             html += '<table>';
             html += '<thead><tr>';
-            html += '<th>No</th>';
-            html += '<th>Nama Ruangan</th>';
-            html += '<th>Panjang (m)</th>';
-            html += '<th>Lebar (m)</th>';
-            html += '<th>Luas (m²)</th>';
+            html += '<th class="num">No</th>';
+            html += '<th>Nama ruangan</th>';
+            html += '<th class="num">Panjang (m)</th>';
+            html += '<th class="num">Lebar (m)</th>';
+            html += '<th class="num">Luas (m²)</th>';
             html += '<th>Ukuran (cm)</th>';
-            html += '<th>Kebutuhan (dus)</th>';
+            html += '<th class="num">Kebutuhan (dus)</th>';
             html += '</tr></thead>';
             html += '<tbody>';
 
@@ -1426,7 +714,7 @@
             // Total row (hanya jika ada luas > 0)
             if (totalArea > 0) {
                 html += '<tr class="total-row">';
-                html += '<td colspan="4" style="text-align:right;">TOTAL</td>';
+                html += '<td colspan="4">Total</td>';
                 html += '<td class="num"><strong>' + totalArea.toFixed(2) + '</strong></td>';
                 html += '<td></td>';
                 html += '<td class="num"><strong>' + totalDus + '</strong></td>';
@@ -1454,9 +742,9 @@
             html += '<div class="action-group-multi">';
             html +=
                 '<a class="btn-wa" target="_blank" href="https://' + _0x2b3c(0) + '?text=' + encodeURIComponent(waMsg) +
-                '" style="display:flex;align-items:center;justify-content:center;gap:0.4rem;background:#25b66b;color:white;border:none;border-radius:40px;padding:0.6rem;font-weight:600;font-size:0.8rem;text-decoration:none;min-height:40px;"><i class="fab fa-whatsapp"></i> Konsultasi WA</a>';
+                '">Konsultasi WA</a>';
             html +=
-                '<button class="btn-print" onclick="printMultiResult()" style="margin-top:0.3rem;background:transparent;color:#333333;border:1px solid #cccccc;border-radius:40px;padding:0.5rem;font-weight:500;font-size:0.75rem;display:flex;align-items:center;justify-content:center;gap:0.3rem;cursor:pointer;width:100%;min-height:38px;"><i class="fas fa-file-pdf"></i> Export PDF</button>';
+                '<button class="btn-print" onclick="printMultiResult()">Export PDF</button>';
             html += '</div>';
 
             summaryMulti.innerHTML = html;
@@ -1508,7 +796,7 @@
             // Total row
             if (totalArea > 0) {
                 tableRows += '<tr style="background:#ececec;font-weight:700;">';
-                tableRows += '<td colspan="4" style="text-align:right;padding:6px 8px;border:1px solid #d4d4d4;border-top:2px solid #111111;">TOTAL</td>';
+                tableRows += '<td colspan="4" style="text-align:right;padding:6px 8px;border:1px solid #d4d4d4;border-top:2px solid #111111;">Total</td>';
                 tableRows += '<td style="text-align:right;padding:6px 8px;border:1px solid #d4d4d4;border-top:2px solid #111111;">' +
                     totalArea.toFixed(2) + '</td>';
                 tableRows += '<td style="padding:6px 8px;border:1px solid #d4d4d4;border-top:2px solid #111111;"></td>';
@@ -1518,29 +806,11 @@
             }
 
             var html = '<html><head><title>Estimasi Kebutuhan Seluruh Rumah</title>';
-            html +=
-                '<style>body{font-family:"Inter",-apple-system,sans-serif;padding:24px 30px;max-width:780px;margin:auto;color:#111111;font-size:12px;background:#fff;}';
-            html +=
-                'h2{font-family:"Poppins",sans-serif;font-weight:600;font-size:1.4rem;color:#111111;margin:0 0 2px 0;}';
-            html += '.sub{color:#404040;font-size:0.85rem;margin-bottom:16px;}';
-            html +=
-                'table{width:100%;border-collapse:collapse;font-size:11px;margin:10px 0 6px;border:1px solid #d4d4d4;}';
-            html += 'th{background:#111111;color:#fff;font-weight:600;padding:6px 8px;border:1px solid #111111;text-align:left;font-size:11px;}';
-            html += 'th.num{text-align:right;}';
-            html +=
-                'td{background:#fff;padding:5px 8px;border:1px solid #d4d4d4;vertical-align:middle;}';
-            html += 'tr:nth-child(even) td{background:#f7f7f7;}';
-            html +=
-                '.footer{margin-top:18px;font-size:10px;color:#7a7a7a;border-top:1px solid #e5e5e5;padding-top:12px;text-align:center;}';
-            html += '.badge-print{display:inline-block;background:#111111;color:#fff;padding:2px 14px;border-radius:30px;font-size:10px;font-weight:600;margin-top:4px;}';
-            html += 'hr{border:0;border-top:1px solid #e5e5e5;margin:10px 0;}';
-            html += '.note{font-size:10px;color:#595959;margin-top:4px;}';
-            html +=
-                '@media print{body{padding:16px;}th{background:#111111 !important;color:#fff !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}tr:nth-child(even) td{background:#f7f7f7 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}.total-row td{background:#ececec !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}}</style>';
+            html += '<style>' + PRINT_CSS + 'th.num{text-align:right}</style>';
             html += '</head><body>';
 
-            html += '<h2>🏠 Estimasi Kebutuhan Seluruh Rumah</h2>';
-            html += '<div class="sub">BARIKO PUTERA · Toko Keramik &amp; Granit</div>';
+            html += '<div class="brand">BARIKO PUTERA</div><h2>Estimasi kebutuhan seluruh rumah</h2>';
+            html += '<div class="sub">Toko keramik &amp; granit, Pemalang</div>';
 
             html += '<table>';
             html += '<thead><tr>';
@@ -1556,10 +826,10 @@
             html += '</table>';
 
             html += '<div class="badge-print">Total ' + totalDus + ' dus</div>';
-            html += '<div class="note"><i class="fas fa-info-circle"></i> Hasil estimasi berdasarkan input yang dimasukkan. Konsultasi dengan tim ahli disarankan.</div>';
+            html += '<div class="note">Hasil estimasi berdasarkan input yang dimasukkan. Konsultasi dengan tim ahli disarankan.</div>';
             html += '<hr />';
-            html += '<div class="footer">Dicetak dari Kalkulator BARIKO PUTERA · ' + new Date().toLocaleDateString(
-                'id-ID') + ' · ' + new Date().toLocaleTimeString('id-ID') + '</div>';
+            html += '<div class="footer">Dicetak dari Kalkulator BARIKO PUTERA, ' + new Date().toLocaleDateString(
+                'id-ID') + ', ' + new Date().toLocaleTimeString('id-ID') + '</div>';
 
             html += '</body></html>';
 
