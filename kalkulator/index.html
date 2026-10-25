@@ -363,9 +363,12 @@ input[type=number]{-moz-appearance:textfield}
             tWB.innerHTML = Math.ceil(boxesWithBuffer) + ' <small>dus</small>';
             tP.textContent = Math.ceil(piecesNeeded);
             tPWB.textContent = Math.ceil(piecesWithBuffer);
-            var msg = 'Halo BARIKO PUTERA, saya mau konsultasi kebutuhan keramik/granit:%0A- Luas: ' + roomArea.toFixed(2) +
-                ' m²%0A- Ukuran: ' + size + ' cm%0A- Estimasi dus (+10%): ' + Math.ceil(boxesWithBuffer) +
-                ' dus%0A- Total keping: ' + Math.ceil(piecesWithBuffer) + ' pcs%0A%0ATerima kasih.';
+            var msg = 'Halo BARIKO PUTERA, saya ingin berkonsultasi mengenai kebutuhan keramik/granit untuk lantai.\n\n' +
+                'Hasil perhitungan:\n' +
+                '- Luas lantai: ' + roomArea.toFixed(2) + ' m²\n' +
+                '- Ukuran keramik: ' + size + ' cm\n' +
+                '- Kebutuhan (sudah termasuk cadangan 10%): ' + Math.ceil(boxesWithBuffer) + ' dus (sekitar ' + Math.ceil(piecesWithBuffer) + ' keping)\n\n' +
+                'Mohon informasi mengenai ketersediaan stok dan harganya. Terima kasih.';
             wAL.href = 'https://' + _0x2b3c(0) + '?text=' + encodeURIComponent(msg);
             rD.classList.add('show');
             rD.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -433,10 +436,13 @@ input[type=number]{-moz-appearance:textfield}
             tWBW.innerHTML = Math.ceil(boxesWithBuffer) + ' <small>dus</small>';
             tPW.textContent = Math.ceil(piecesNeeded);
             tPWBW.textContent = Math.ceil(piecesWithBuffer);
-            var msg = 'Halo BARIKO PUTERA, saya mau konsultasi kebutuhan keramik/granit dinding:%0A- Tinggi: ' + height +
-                ' m, Panjang: ' + length + ' m, Lebar: ' + width + ' m%0A- Luas dinding: ' + wallArea.toFixed(2) +
-                ' m²%0A- Ukuran: ' + size + ' cm%0A- Estimasi dus (+10%): ' + Math.ceil(boxesWithBuffer) +
-                ' dus%0A- Total keping: ' + Math.ceil(piecesWithBuffer) + ' pcs%0A%0ATerima kasih.';
+            var msg = 'Halo BARIKO PUTERA, saya ingin berkonsultasi mengenai kebutuhan keramik/granit untuk dinding.\n\n' +
+                'Hasil perhitungan:\n' +
+                '- Dimensi: tinggi ' + height + ' m, panjang ' + length + ' m, lebar ' + width + ' m\n' +
+                '- Luas dinding: ' + wallArea.toFixed(2) + ' m²\n' +
+                '- Ukuran keramik: ' + size + ' cm\n' +
+                '- Kebutuhan (sudah termasuk cadangan 10%): ' + Math.ceil(boxesWithBuffer) + ' dus (sekitar ' + Math.ceil(piecesWithBuffer) + ' keping)\n\n' +
+                'Mohon informasi mengenai ketersediaan stok dan harganya. Terima kasih.';
             wALW.href = 'https://' + _0x2b3c(0) + '?text=' + encodeURIComponent(msg);
             rDW.classList.add('show');
             rDW.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -725,19 +731,16 @@ input[type=number]{-moz-appearance:textfield}
             html += '</div>';
 
             // WA + Print buttons
-            var waMsg =
-                'Halo BARIKO PUTERA, saya mau konsultasi kebutuhan keramik/granit untuk seluruh rumah (tanpa buffer):%0A%0A';
+            var waMsg = 'Halo BARIKO PUTERA, saya ingin berkonsultasi mengenai kebutuhan keramik/granit untuk seluruh rumah.\n\nRincian per ruangan:\n';
             data.forEach(function(r) {
+                var dim = r.length.toFixed(2) + ' m × ' + r.width.toFixed(2) + ' m = ' + r.area.toFixed(2) + ' m²';
                 if (r.area > 0 && r.tileArea > 0) {
-                    waMsg += r.name + ': ' + r.length.toFixed(2) + 'm × ' + r.width.toFixed(2) + 'm = ' + r.area
-                        .toFixed(2) + ' m², ' + (r.size || 'belum diketahui') + ' cm, ' + r.dus + ' dus%0A';
+                    waMsg += '- ' + r.name + ': ' + dim + ', keramik ' + r.size + ' cm, ' + r.dus + ' dus\n';
                 } else {
-                    waMsg += r.name + ': ' + r.length.toFixed(2) + 'm × ' + r.width.toFixed(2) + 'm = ' + r.area
-                        .toFixed(2) + ' m², (ukuran belum dipilih)%0A';
+                    waMsg += '- ' + r.name + ': ' + dim + ', ukuran keramik belum ditentukan\n';
                 }
             });
-            waMsg += '%0ATotal luas: ' + totalArea.toFixed(2) + ' m²%0ATotal dus (pembulatan ke atas): ' + totalDus +
-                ' dus%0A%0ATerima kasih.';
+            waMsg += '\nTotal luas: ' + totalArea.toFixed(2) + ' m²\nTotal kebutuhan: ' + totalDus + ' dus (dibulatkan ke atas, belum termasuk cadangan 10%)\n\nMohon informasi mengenai ketersediaan stok dan harganya. Terima kasih.';
 
             html += '<div class="action-group-multi">';
             html +=
