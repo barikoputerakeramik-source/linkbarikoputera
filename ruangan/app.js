@@ -10,7 +10,7 @@ const products=[
 {id:'siam',name:'Siam Grey',size:'60x60',surface:'Glossy',color:'#f7f2f1',vein:'#d9d3d0',pattern:'stone',texture:'siam'},
 {id:'romania',name:'Romania Grey',size:'60x60',surface:'Glossy',color:'#e2e2e2',vein:'#c4c4c4',pattern:'stone',texture:'romania'},
 {id:'sebastian',name:'Sebastian Grey',size:'60x60',surface:'Glossy',color:'#fbfbfc',vein:'#b5b7bb',pattern:'marble',texture:'sebastian',seamless:true},
-{id:'rillan',name:'Rillan Black',size:'60x60',surface:'Glossy',color:'#141d21',vein:'#5a6165',pattern:'stone',texture:'rillan'},
+{id:'rillan',name:'Rillan Black',size:'60x60',surface:'Glossy',color:'#141d21',vein:'#5a6165',pattern:'stone',texture:'rillan',shine:1.2,shineFloor:.9},
 {id:'sand',name:'Marble Sand',size:'60x60',surface:'Glossy',color:'#d9d0c1',vein:'#b8aa96',pattern:'marble'},
 {id:'cloud',name:'Cloud White',size:'60x60',surface:'Glossy',color:'#e8e5dd',vein:'#aaa99f',pattern:'marble'},
 {id:'cement',name:'Urban Cement',size:'50x50',surface:'Matt',color:'#aaa9a1',vein:'#8d8d85',pattern:'cement'},
@@ -289,12 +289,15 @@ function composite(p){
   if(mask[i]<128)continue;const q=i*4;
   for(let c=0;c<3;c++){st[c]+=tex[q+c];so[c]+=shade(i,q,c)}
  }
+ const shine=p.shine||0,sh0=base*(p.shineFloor||.55);
  const gain=[0,1,2].map(c=>so[c]>0?clamp(st[c]/so[c],.85,1.3):1);
  for(let i=S.minY*W;i<W*H;i++){
   const m=mask[i];if(!m)continue;
   const a=m/255,q=i*4;
   for(let c=0;c<3;c++){
-   let v=shade(i,q,c)*gain[c];v=v>255?255:v;
+   let v=shade(i,q,c)*gain[c];
+   if(shine)v+=shine*(Ls[i]>sh0?Ls[i]-sh0:0);      // pantulan aditif untuk ubin gelap (properti shine)
+   v=v>255?255:v;
    o[q+c]=photo[q+c]*(1-a)+v*a;
   }
  }
